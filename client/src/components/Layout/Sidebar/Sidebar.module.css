@@ -1,0 +1,22 @@
+.sidebarContainer {
+  width: 280px;
+  background-color: rgb(247, 247, 247);
+  border-right: 1px solid rgba(223, 223, 223, 0.6);
+}
+
+.sidebarContainerList {
+  margin: 0 1rem !important;
+}
+
+.navItem {
+  color: #706f6f !important;
+  padding: 1rem !important;
+  font-size: 1.15rem !important;
+}
+
+.selectedTab {
+  background-color: #e4e4e4 !important;
+  border-radius: 10px !important;
+  color: #0f0f0f !important;
+  font-weight: 600 !important;
+}

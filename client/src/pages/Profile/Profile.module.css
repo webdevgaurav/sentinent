@@ -1,0 +1,12 @@
+.container {
+  margin: 1rem;
+}
+
+.container img{
+  width: 8rem;
+  height: 8rem;
+  border: 1px dashed #d9d9d9;
+  border-radius: 10px;
+  background-color: #dbdfdf;
+  margin-bottom: 2rem;
+}

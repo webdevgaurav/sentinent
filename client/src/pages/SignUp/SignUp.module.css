@@ -1,0 +1,15 @@
+.container {
+  background: url("/assets/signup-bg.png") no-repeat;
+  background-size: cover;
+  display: flex;
+  align-items: center;
+  height: 100vh;
+}
+
+.signUpLeft {
+  border-radius: 10px;
+  background-color: rgb(255, 192, 203, 0.6);
+  padding: 2rem;
+  width: 40rem;
+  margin: 0 auto;
+}

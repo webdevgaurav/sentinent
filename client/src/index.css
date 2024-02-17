@@ -1,0 +1,28 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.spaceBetween {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.loadMore {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loadMore > a{
+  border-radius: 15px;
+  background-color: rgb(243, 243, 243);
+  text-align: center;
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+}
+.loadMore>a:hover {
+  background-color: #d9d9d9;
+}

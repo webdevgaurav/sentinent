@@ -1,0 +1,14 @@
+.containerMargin {
+  justify-content: space-between;
+}
+
+.headerDropdown {
+  display: block !important;
+  right: 0;
+}
+
+.notificationIcon{
+  margin: 0 2rem;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
