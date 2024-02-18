@@ -1,7 +1,7 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import Header from "../components/Layout/Header/Header";
 import Sidebar from "../components/Layout/Sidebar/Sidebar";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const App = () => {
   const sidebarData = [
@@ -38,6 +38,11 @@ const App = () => {
   ];
   const [sidebarActive, setSidebarActive] = useState(sidebarData);
   const [headerTab, setHeaderTab] = useState({heading: 'Dashboard'});
+  const navigate = useNavigate();
+  
+  useEffect(() => {
+    navigate("dashboard");
+  }, [navigate]);
 
   const handleSidebarTags = ({ id }) => {
     setSidebarActive((prevState) =>

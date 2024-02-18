@@ -3,7 +3,7 @@ import { Button, Modal } from "react-bootstrap";
 import FileUpload from "../../../components/Uploader/FileUpload";
 import { BASE_URL } from "../../../../config";
 
-const AddTraining = ({ onOpen, onClose }) => {
+const AddProduct = ({ onOpen, onClose }) => {
   const [product, setProduct] = useState({
     title: "",
     thumbnail: "",
@@ -29,7 +29,7 @@ const AddTraining = ({ onOpen, onClose }) => {
     setProduct({ ...product, thumbnail: path });
   };
 
-  const handleAddTraining = () => {
+  const handleAddProduct = () => {
     fetch(`${BASE_URL}/products/create`, {
       method: "POST",
       headers: {
@@ -120,7 +120,7 @@ const AddTraining = ({ onOpen, onClose }) => {
           <Button variant="secondary" onClick={() => onClose()}>
             Close
           </Button>
-          <Button variant="primary" onClick={handleAddTraining}>
+          <Button variant="primary" onClick={handleAddProduct}>
             Save
           </Button>
         </Modal.Footer>
@@ -129,4 +129,4 @@ const AddTraining = ({ onOpen, onClose }) => {
   );
 };
 
-export default AddTraining;
+export default AddProduct;

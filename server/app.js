@@ -15,6 +15,7 @@ const authRoutes = require('./routes/authRoutes');
 const service = require('./routes/serviceRoutes');
 const userRoutes = require('./routes/userRoutes');
 const productRoutes = require('./routes/productRoutes');
+const phasesRoutes = require('./routes/phasesRoutes');
 
 // Initialize express app
 const app = express();
@@ -24,12 +25,6 @@ app.use(express.json());
 app.use(bodyParser.json()); // Parse JSON bodies
 app.use(bodyParser.urlencoded({ extended: true })); // Parse URL-encoded bodies
 app.use(cors()); // Enable Cross-Origin Resource Sharing (CORS)
-
-app.use('/', authRoutes);
-app.use('/service', service);
-app.use('/users', userRoutes);
-app.use('/products', productRoutes);
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 app.set('trust proxy', 1);
 
@@ -53,6 +48,14 @@ app.use(session({
         maxAge: 1000 * 60 * 60 * 24 // 1 day
     }
 }));
+
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+app.use('/', authRoutes);
+app.use('/service', service);
+app.use('/users', userRoutes);
+app.use('/products', productRoutes);
+app.use('/phases', phasesRoutes);
+
 
 app.all('*', (req, res, next) => {
   res.status(404).json({

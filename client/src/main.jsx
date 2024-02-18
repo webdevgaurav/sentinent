@@ -15,6 +15,8 @@ import Training from "./pages/Training/Training.jsx";
 import Coaching from "./pages/Coaching/Coaching.jsx";
 import Tasks from "./pages/Tasks/Tasks.jsx";
 import Notes from "./pages/Notes/Notes.jsx";
+import Phases from "./pages/Training/Phases/Phases.jsx";
+import Product from "./pages/Training/Product/Product.jsx";
 
 const router = createBrowserRouter([
   {
@@ -23,11 +25,11 @@ const router = createBrowserRouter([
   },
   {
     path: "/login",
-    element: <Login type={'login'}/>,
+    element: <Login type={"login"} />,
   },
   {
     path: "/logout",
-    element: <Login type={'logout'}/>,
+    element: <Login type={"logout"} />,
   },
   {
     path: "/",
@@ -40,6 +42,16 @@ const router = createBrowserRouter([
       {
         path: "training",
         element: <Training />,
+        children: [
+          {
+            path: "product",
+            element: <Product />,
+          },
+          {
+            path: "phases/:productId",
+            element: <Phases />,
+          },
+        ],
       },
       {
         path: "coaching",
