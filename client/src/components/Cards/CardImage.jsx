@@ -1,6 +1,6 @@
 import { BASE_URL } from "../../../config";
 
-const CardImage = ({ data }) => {
+const CardImage = ({ data, onClick }) => {
   const { title, thumbnail, price } = data;
   return (
     <div className="card col-xs-12 col-sm-6 col-md-4 col-lg-3 m-3">
@@ -12,7 +12,9 @@ const CardImage = ({ data }) => {
           alignItems: "center",
           justifyContent: "center",
           overflow: "hidden",
+          cursor: "pointer",
         }}
+        onClick={() => onClick(data)}
       >
         {thumbnail ? (
           <img
