@@ -20,7 +20,10 @@ exports.getModules = async (req, res) => {
     if (search) {
       searchParams["title"] = { $regex: search, $options: "i" };
     }
-    const originalQuery = Module.find(searchParams).populate(phasesId);
+    if (phasesId) {
+      searchParams["phasesId"] = phasesId;
+    }
+    const originalQuery = Module.find(searchParams);
     const clonedQuery = originalQuery.clone();
     const totalCount = await clonedQuery.countDocuments();
     const phases = await originalQuery

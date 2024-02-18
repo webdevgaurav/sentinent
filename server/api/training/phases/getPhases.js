@@ -20,7 +20,10 @@ exports.getPhases = async (req, res) => {
     if (search) {
       searchParams["title"] = { $regex: search, $options: "i" };
     }
-    const originalQuery = Phases.find(searchParams).populate(productId);
+    if (productId) {
+      searchParams["productId"] = productId;
+    }
+    const originalQuery = Phases.find(searchParams);
     const clonedQuery = originalQuery.clone();
     const totalCount = await clonedQuery.countDocuments();
     const phases = await originalQuery
