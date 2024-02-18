@@ -22,7 +22,7 @@ const Product = () => {
     const limit = 2;
     if (productPage) {
       fetch(
-        `${BASE_URL}/products/get?search=${search}&page=${productPage}&limit=${limit}`
+        `${BASE_URL}/training/products/get?search=${search}&page=${productPage}&limit=${limit}`
       )
         .then((response) => {
           if (!response.ok) {

@@ -30,7 +30,7 @@ const AddPhases = ({ onOpen, onClose, productId }) => {
   };
 
   const handleAddPhases = () => {
-    fetch(`${BASE_URL}/phases/create`, {
+    fetch(`${BASE_URL}/training/phases/create`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

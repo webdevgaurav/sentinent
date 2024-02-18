@@ -30,7 +30,7 @@ const AddProduct = ({ onOpen, onClose }) => {
   };
 
   const handleAddProduct = () => {
-    fetch(`${BASE_URL}/products/create`, {
+    fetch(`${BASE_URL}/training/products/create`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

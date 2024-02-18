@@ -14,8 +14,7 @@ const MongoDBStore = require('connect-mongodb-session')(session);
 const authRoutes = require('./routes/authRoutes');
 const service = require('./routes/serviceRoutes');
 const userRoutes = require('./routes/userRoutes');
-const productRoutes = require('./routes/productRoutes');
-const phasesRoutes = require('./routes/phasesRoutes');
+const trainingRoutes = require('./routes/trainingRoutes');
 
 // Initialize express app
 const app = express();
@@ -53,8 +52,7 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use('/', authRoutes);
 app.use('/service', service);
 app.use('/users', userRoutes);
-app.use('/products', productRoutes);
-app.use('/phases', phasesRoutes);
+app.use('/training', trainingRoutes);
 
 
 app.all('*', (req, res, next) => {

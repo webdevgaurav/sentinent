@@ -1,4 +1,4 @@
-const Phases = require("../../models/phasesModel");
+const Phases = require("../../../models/phasesModel");
 
 exports.createPhases = async (req, res) => {
   try {

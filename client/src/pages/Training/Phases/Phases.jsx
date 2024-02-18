@@ -22,7 +22,7 @@ const Phases = () => {
     const limit = 2;
     if (phasesPage) {
       fetch(
-        `${BASE_URL}/phases/get/${params.productId}?search=${search}&page=${phasesPage}&limit=${limit}`
+        `${BASE_URL}/training/phases/get/${params.productId}?search=${search}&page=${phasesPage}&limit=${limit}`
       )
         .then((response) => {
           if (!response.ok) {
