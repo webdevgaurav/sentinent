@@ -5,7 +5,7 @@ exports.getPhase = async (req, res) => {
     const phases = await Phases.findOne({ _id: req.params.id });
     return res.status(201).json(phases);
   } catch (error) {
-    throw error;
+    throw error.message;
   }
 };
 
@@ -32,6 +32,6 @@ exports.getPhases = async (req, res) => {
       .limit(limit);
     return res.status(201).json({phases, totalCount});
   } catch (error) {
-    throw error;
+    throw error.message;
   }
 };
