@@ -55,7 +55,6 @@ const Phases = () => {
   };
   const handlePhasesSearch = (e) => {
     if (e.key === "Enter") {
-      console.log("on enter", search);
       setPhases([]);
       setPhasesPage(1);
     } else {
@@ -66,7 +65,7 @@ const Phases = () => {
     setPhasesPage(phasesPage + 1);
   };
   const handleNavigateToModule = (item) => {
-    navigate(`/training/module/${item._id}`);
+    navigate(`/training/module/${item.productId}/${item._id}`);
   };
 
   return (

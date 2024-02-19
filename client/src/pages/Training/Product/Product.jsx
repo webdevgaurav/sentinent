@@ -53,7 +53,6 @@ const Product = () => {
   };
   const handleProductSearch = (e) => {
     if (e.key === "Enter") {
-      console.log("on enter", search);
       setProducts([]);
       setProductPage(1);
     } else {

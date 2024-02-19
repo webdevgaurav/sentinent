@@ -3,17 +3,18 @@ import { Button, Modal } from "react-bootstrap";
 import FileUpload from "../../../components/Uploader/FileUpload";
 import { BASE_URL } from "../../../../config";
 
-const AddModule = ({ onOpen, onClose, productId }) => {
+const AddModule = ({ onOpen, onClose, params }) => {
   const [module, setModule] = useState({
     title: "",
     thumbnail: "",
     productId: "",
+    phasesId: "",
     creatorId: "",
   });
   useEffect(() => {
     let user = localStorage.getItem("user");
     user = JSON.parse(user);
-    setModule({ ...module, creatorId: user._id, productId: productId });
+    setModule({ ...module, creatorId: user._id, productId: params.productId, phasesId: params.phasesId });
   }, []);
 
   const handleChange = (e) => {

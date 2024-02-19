@@ -36,7 +36,6 @@ const SignUp = () => {
         return response.json();
       })
       .then((data) => {
-        console.log("Response from server:", data);
         localStorage.setItem("token", data.token);
         setUserDetails({
           username: "",

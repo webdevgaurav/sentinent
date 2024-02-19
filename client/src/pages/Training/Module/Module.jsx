@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import AddModule from "../Modals/AddModule";
 import { IoMdAdd } from "react-icons/io";
 import { useEffect, useState } from "react";
@@ -7,15 +7,16 @@ import styles from "./Module.module.css";
 import NoRecordFound from "../../../components/Errors/NoRecordFound";
 import CardImage from "../../../components/Cards/CardImage";
 import { MdDownloading } from "react-icons/md";
+import ModuleForm from "../Modals/ModuleForm";
 
 const Module = () => {
   const params = useParams();
   const [show, setShow] = useState(false);
+  const [showModuleForm, setShowModuleForm] = useState(false);
   const [modulePage, setModulePage] = useState(1);
   const [moduleLoader, setModuleLoader] = useState(false);
   const [search, setSearch] = useState("");
   const [module, setModule] = useState([]);
-  const navigate = useNavigate();
 
   useEffect(() => {
     setModuleLoader(false);
@@ -32,7 +33,6 @@ const Module = () => {
         })
         .then((data) => {
           setModuleLoader(true);
-          console.log(data)
           if (data) {
             setModule([...data.module, ...module]);
             if (data.totalCount <= modulePage * limit) {
@@ -54,9 +54,14 @@ const Module = () => {
     setModulePage(1);
     setShow(false);
   };
+  const handleShowModuleForm = (item) => {
+    setShowModuleForm(true);
+  };
+  const handleModuleFormClose = () => {
+    setShowModuleForm(false);
+  };
   const handleModuleSearch = (e) => {
     if (e.key === "Enter") {
-      console.log("on enter", search);
       setModule([]);
       setModulePage(1);
     } else {
@@ -66,17 +71,18 @@ const Module = () => {
   const handleLoadMoreModule = () => {
     setModulePage(modulePage + 1);
   };
-  const handleNavigateToModule = (item) => {
-    console.log(item);
-    // navigate(`/training/module/module/${item._id}`);
-  };
 
   return (
     <div>
       <AddModule
         onOpen={show}
         onClose={handleClose}
-        phasesId={params.phasesId}
+        params={params}
+      />
+      <ModuleForm
+        onOpen={showModuleForm}
+        onClose={handleModuleFormClose}
+        params={params}
       />
       <div className="d-flex align-items-center justify-content-between m-4">
         <input
@@ -98,7 +104,7 @@ const Module = () => {
             <CardImage
               key={index}
               data={item}
-              onClick={handleNavigateToModule}
+              onClick={handleShowModuleForm}
             />
           ))
         ) : (

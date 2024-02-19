@@ -53,7 +53,7 @@ const router = createBrowserRouter([
             element: <Phases />,
           },
           {
-            path: "module/:phasesId",
+            path: "module/:productId/:phasesId",
             element: <Module />,
           },
         ],
