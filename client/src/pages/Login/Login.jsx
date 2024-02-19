@@ -4,16 +4,21 @@ import { BASE_URL } from "../../../config";
 import { Link, Navigate } from "react-router-dom";
 
 const Login = ({ type }) => {
-  if (type === "logout") {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
-    return <Navigate to="/login" />;
-  }
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userDetails, setUserDetails] = useState({
     email: "",
     password: "",
   });
+
+  if (type === "logout") {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    return <Navigate to="/login" />;
+  }
+
+  if(localStorage.getItem("token")){
+    return <Navigate to="/dashboard" />;
+  }
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
