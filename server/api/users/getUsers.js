@@ -5,7 +5,7 @@ exports.getUser = async (req, res) => {
     const user = await User.findOne({ email: req.params.email });
     return res.status(201).json(user);
   } catch (error) {
-    throw error;
+    throw error.message;
   }
 };
 
@@ -20,6 +20,6 @@ exports.getUsers = async (req, res) => {
       .limit(limit);
     return res.status(201).json(user);
   } catch (error) {
-    throw error;
+    throw error.message;
   }
 };

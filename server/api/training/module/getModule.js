@@ -1,11 +1,11 @@
-const Module = require("../../../models/phasesModel");
+const Module = require("../../../models/moduleModel");
 
 exports.getModule = async (req, res) => {
   try {
-    const phases = await Module.findOne({ _id: req.params.id });
-    return res.status(201).json(phases);
+    const module = await Module.findOne({ _id: req.params.id });
+    return res.status(201).json(module);
   } catch (error) {
-    throw error;
+    throw error.message;
   }
 };
 
@@ -26,12 +26,12 @@ exports.getModules = async (req, res) => {
     const originalQuery = Module.find(searchParams);
     const clonedQuery = originalQuery.clone();
     const totalCount = await clonedQuery.countDocuments();
-    const phases = await originalQuery
+    const module = await originalQuery
       .sort({ createdAt: -1 })
       .skip(skip)
       .limit(limit);
-    return res.status(201).json({phases, totalCount});
+    return res.status(201).json({module, totalCount});
   } catch (error) {
-    throw error;
+    throw error.message;
   }
 };

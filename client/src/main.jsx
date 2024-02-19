@@ -15,8 +15,9 @@ import Training from "./pages/Training/Training.jsx";
 import Coaching from "./pages/Coaching/Coaching.jsx";
 import Tasks from "./pages/Tasks/Tasks.jsx";
 import Notes from "./pages/Notes/Notes.jsx";
-import Phases from "./pages/Training/Phases/Phases.jsx";
 import Product from "./pages/Training/Product/Product.jsx";
+import Phases from "./pages/Training/Phases/Phases.jsx";
+import Module from "./pages/Training/Module/Module.jsx";
 
 const router = createBrowserRouter([
   {
@@ -50,6 +51,10 @@ const router = createBrowserRouter([
           {
             path: "phases/:productId",
             element: <Phases />,
+          },
+          {
+            path: "module/:phasesId",
+            element: <Module />,
           },
         ],
       },

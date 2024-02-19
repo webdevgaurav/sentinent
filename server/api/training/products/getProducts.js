@@ -5,7 +5,7 @@ exports.getProduct = async (req, res) => {
     const product = await Product.findOne({ _id: req.params.id });
     return res.status(201).json(product);
   } catch (error) {
-    throw error;
+    throw error.message;
   }
 };
 
@@ -28,6 +28,6 @@ exports.getProducts = async (req, res) => {
       .limit(limit);
     return res.status(201).json({product, totalCount});
   } catch (error) {
-    throw error;
+    throw error.message;
   }
 };

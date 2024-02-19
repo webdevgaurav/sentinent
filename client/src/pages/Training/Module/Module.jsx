@@ -1,28 +1,28 @@
 import { useNavigate, useParams } from "react-router-dom";
-import AddPhases from "../Modals/AddPhases";
+import AddModule from "../Modals/AddModule";
 import { IoMdAdd } from "react-icons/io";
 import { useEffect, useState } from "react";
 import { BASE_URL } from "../../../../config";
-import styles from "./Phases.module.css";
+import styles from "./Module.module.css";
 import NoRecordFound from "../../../components/Errors/NoRecordFound";
 import CardImage from "../../../components/Cards/CardImage";
 import { MdDownloading } from "react-icons/md";
 
-const Phases = () => {
+const Module = () => {
   const params = useParams();
   const [show, setShow] = useState(false);
-  const [phasesPage, setPhasesPage] = useState(1);
-  const [phasesLoader, setPhasesLoader] = useState(false);
+  const [modulePage, setModulePage] = useState(1);
+  const [moduleLoader, setModuleLoader] = useState(false);
   const [search, setSearch] = useState("");
-  const [phases, setPhases] = useState([]);
+  const [module, setModule] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
-    setPhasesLoader(false);
+    setModuleLoader(false);
     const limit = 2;
-    if (phasesPage) {
+    if (modulePage) {
       fetch(
-        `${BASE_URL}/training/phases/get/${params.productId}?search=${search}&page=${phasesPage}&limit=${limit}`
+        `${BASE_URL}/training/module/get/${params.phasesId}?search=${search}&page=${modulePage}&limit=${limit}`
       )
         .then((response) => {
           if (!response.ok) {
@@ -31,11 +31,12 @@ const Phases = () => {
           return response.json();
         })
         .then((data) => {
-          setPhasesLoader(true);
-          if(data) {
-            setPhases([...data.phases, ...phases]);
-            if (data.totalCount <= phasesPage * limit) {
-              setPhasesPage(0);
+          setModuleLoader(true);
+          console.log(data)
+          if (data) {
+            setModule([...data.module, ...module]);
+            if (data.totalCount <= modulePage * limit) {
+              setModulePage(0);
             }
           }
         })
@@ -43,38 +44,39 @@ const Phases = () => {
           console.error("Error:", error);
         });
     }
-  }, [phasesPage]);
+  }, [modulePage]);
 
   const handleShow = () => {
     setShow(true);
   };
   const handleClose = () => {
-    setPhases([]);
-    setPhasesPage(1);
+    setModule([]);
+    setModulePage(1);
     setShow(false);
   };
-  const handlePhasesSearch = (e) => {
+  const handleModuleSearch = (e) => {
     if (e.key === "Enter") {
       console.log("on enter", search);
-      setPhases([]);
-      setPhasesPage(1);
+      setModule([]);
+      setModulePage(1);
     } else {
       setSearch(e.target.value);
     }
   };
-  const handleLoadMorePhases = () => {
-    setPhasesPage(phasesPage + 1);
+  const handleLoadMoreModule = () => {
+    setModulePage(modulePage + 1);
   };
   const handleNavigateToModule = (item) => {
-    navigate(`/training/module/${item._id}`);
+    console.log(item);
+    // navigate(`/training/module/module/${item._id}`);
   };
 
   return (
     <div>
-      <AddPhases
+      <AddModule
         onOpen={show}
         onClose={handleClose}
-        productId={params.productId}
+        phasesId={params.phasesId}
       />
       <div className="d-flex align-items-center justify-content-between m-4">
         <input
@@ -83,16 +85,16 @@ const Phases = () => {
           value={search}
           placeholder="Search"
           aria-label="Search"
-          onKeyDown={handlePhasesSearch}
-          onChange={handlePhasesSearch}
+          onKeyDown={handleModuleSearch}
+          onChange={handleModuleSearch}
         />
-        <button className={styles.addPhasesBtn} onClick={handleShow}>
+        <button className={styles.addModuleBtn} onClick={handleShow}>
           <IoMdAdd />
         </button>
       </div>
       <div className="d-flex flex-wrap">
-        {phases.length ? (
-          phases.map((item, index) => (
+        {module.length ? (
+          module.map((item, index) => (
             <CardImage
               key={index}
               data={item}
@@ -104,9 +106,9 @@ const Phases = () => {
         )}
       </div>
 
-      <div className={`loadMore ${!phasesPage && "d-none"}`}>
-        <a onClick={handleLoadMorePhases}>
-          {!phasesLoader ? "Load More" : "Loading..."}
+      <div className={`loadMore ${!modulePage && "d-none"}`}>
+        <a onClick={handleLoadMoreModule}>
+          {!moduleLoader ? "Load More" : "Loading..."}
           <MdDownloading />
         </a>
       </div>
@@ -114,4 +116,4 @@ const Phases = () => {
   );
 };
 
-export default Phases;
+export default Module;
