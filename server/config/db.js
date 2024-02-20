@@ -1,8 +1,8 @@
 const mongoose = require("mongoose");
 require("dotenv").config();
 
-const { DB_CONNECT, DB_NAME } = process.env;
-mongoose.connect(DB_CONNECT + DB_NAME);
+const { DB_CONNECT } = process.env;
+mongoose.connect(DB_CONNECT);
 const db = mongoose.connection;
 
 db.on("connected", () => {

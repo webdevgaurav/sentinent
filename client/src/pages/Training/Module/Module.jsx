@@ -7,7 +7,7 @@ import styles from "./Module.module.css";
 import NoRecordFound from "../../../components/Errors/NoRecordFound";
 import CardImage from "../../../components/Cards/CardImage";
 import { MdDownloading } from "react-icons/md";
-import ModuleForm from "../Modals/ModuleForm";
+import ModuleForm from "./ModuleForm";
 
 const Module = () => {
   const params = useParams();
@@ -74,50 +74,51 @@ const Module = () => {
 
   return (
     <div>
-      <AddModule
-        onOpen={show}
-        onClose={handleClose}
-        params={params}
-      />
-      <ModuleForm
-        onOpen={showModuleForm}
-        onClose={handleModuleFormClose}
-        params={params}
-      />
-      <div className="d-flex align-items-center justify-content-between m-4">
-        <input
-          className="form-control w-25"
-          type="search"
-          value={search}
-          placeholder="Search"
-          aria-label="Search"
-          onKeyDown={handleModuleSearch}
-          onChange={handleModuleSearch}
+      <AddModule onOpen={show} onClose={handleClose} params={params} />
+      {showModuleForm ? (
+        <ModuleForm
+          onOpen={showModuleForm}
+          onClose={handleModuleFormClose}
+          params={params}
         />
-        <button className={styles.addModuleBtn} onClick={handleShow}>
-          <IoMdAdd />
-        </button>
-      </div>
-      <div className="d-flex flex-wrap">
-        {module.length ? (
-          module.map((item, index) => (
-            <CardImage
-              key={index}
-              data={item}
-              onClick={handleShowModuleForm}
+      ) : (
+        <>
+          <div className="d-flex align-items-center justify-content-between m-4">
+            <input
+              className="form-control w-25"
+              type="search"
+              value={search}
+              placeholder="Search"
+              aria-label="Search"
+              onKeyDown={handleModuleSearch}
+              onChange={handleModuleSearch}
             />
-          ))
-        ) : (
-          <NoRecordFound />
-        )}
-      </div>
+            <button className={styles.addModuleBtn} onClick={handleShow}>
+              <IoMdAdd />
+            </button>
+          </div>
+          <div className="d-flex flex-wrap">
+            {module.length ? (
+              module.map((item, index) => (
+                <CardImage
+                  key={index}
+                  data={item}
+                  onClick={handleShowModuleForm}
+                />
+              ))
+            ) : (
+              <NoRecordFound />
+            )}
+          </div>
 
-      <div className={`loadMore ${!modulePage && "d-none"}`}>
-        <a onClick={handleLoadMoreModule}>
-          {!moduleLoader ? "Load More" : "Loading..."}
-          <MdDownloading />
-        </a>
-      </div>
+          <div className={`loadMore ${!modulePage && "d-none"}`}>
+            <a onClick={handleLoadMoreModule}>
+              {!moduleLoader ? "Load More" : "Loading..."}
+              <MdDownloading />
+            </a>
+          </div>
+        </>
+      )}
     </div>
   );
 };
