@@ -1,8 +1,8 @@
 const InputTextarea = ({ fields, onChange }) => {
   const { index, label, value } = fields;
   return (
-    <div className="form-floating">
-      <label htmlFor={index} className="form-label">
+    <>
+      <label htmlFor={index}>
         {label}
       </label>
       <textarea
@@ -11,7 +11,7 @@ const InputTextarea = ({ fields, onChange }) => {
         value={value}
         onChange={onChange}
       ></textarea>
-    </div>
+    </>
   );
 };
 

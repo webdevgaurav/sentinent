@@ -8,6 +8,9 @@ const ModuleForm = ({ onOpen, onClose, params }) => {
     user = JSON.parse(user);
   }, []);
 
+  const handleOnSave = (data) => {
+    console.log(data);
+  };
   const handleModuleForm = () => {};
   return (
     <>
@@ -20,7 +23,7 @@ const ModuleForm = ({ onOpen, onClose, params }) => {
           onClick={() => onClose()}
         ></button>
       </div>
-      <FormBuilder />
+      <FormBuilder onSave={handleOnSave} />
     </>
   );
 };

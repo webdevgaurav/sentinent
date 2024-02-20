@@ -4,8 +4,12 @@ import InputText from "../Elements/Input/InputText";
 import { useState } from "react";
 import InputTextarea from "../Elements/Input/InputTextarea";
 import styles from "./FormBuilder.module.css";
+import VideoElement from "../Elements/Video/VideoElement";
+import FileUpload from "../Uploader/FileUpload";
+import { IoClose } from "react-icons/io5";
+import Image from "../Elements/Image/Image";
 
-const FormBuilder = () => {
+const FormBuilder = ({ onSave }) => {
   const [dynamicFormData, setDynamicFormData] = useState([]);
   const [currentActiveField, setCurrentActiveField] = useState(-1);
   const [tabType, setTabType] = useState({
@@ -21,9 +25,6 @@ const FormBuilder = () => {
       ...{ type, label, name, value, placeholder },
     };
     setDynamicFormData(newArray);
-  };
-  const getdata = () => {
-    console.log(dynamicFormData[currentActiveField]);
   };
   const handleFormTabs = (e) => {
     if (e.target.id) {
@@ -44,9 +45,29 @@ const FormBuilder = () => {
     };
     const newArray = [...dynamicFormData, newObj];
     setDynamicFormData(newArray);
+    setTabType({
+      addField: false,
+      editField: true,
+      setting: false,
+    });
+    setCurrentActiveField(newArray.length - 1);
+  };
+  const addVideoFields = (e) => {
+    const newObj = {
+      videoPath: "",
+      type: e.target.name,
+      vidoeType: "",
+    };
+    const newArray = [...dynamicFormData, newObj];
+    setDynamicFormData(newArray);
+    setTabType({
+      addField: false,
+      editField: true,
+      setting: false,
+    });
+    setCurrentActiveField(newArray.length - 1);
   };
   const handleActiveField = (e) => {
-    console.log(e.target.id);
     setCurrentActiveField(e.target.id);
   };
   const handleEditFieldTextChange = (e) => {
@@ -58,7 +79,46 @@ const FormBuilder = () => {
     };
     setDynamicFormData(newArray);
   };
-
+  const handleVideoUpload = (path) => {
+    if (!path) {
+      alert("Please select a file");
+      return;
+    }
+    const newArray = [...dynamicFormData];
+    newArray[currentActiveField] = {
+      ...newArray[currentActiveField],
+      videoPath: path,
+    };
+    setDynamicFormData(newArray);
+  };
+  const handleImageUpload = (path) => {
+    if (!path) {
+      alert("Please select a file");
+      return;
+    }
+    const newArray = [...dynamicFormData];
+    newArray[currentActiveField] = {
+      ...newArray[currentActiveField],
+      imagePath: path,
+    };
+    setDynamicFormData(newArray);
+  };
+  const handleVideoTypeHeading = (e) => {
+    const { name, value } = e.target;
+    const newArray = [...dynamicFormData];
+    newArray[currentActiveField] = {
+      ...newArray[currentActiveField],
+      [name]: value,
+    };
+    setDynamicFormData(newArray);
+  };
+  const handleRemoveField = () => {
+    if (currentActiveField) {
+      const newArray = [...dynamicFormData];
+      newArray.splice(currentActiveField, 1);
+      setDynamicFormData(newArray);
+    }
+  };
   return (
     <div className="row">
       <div className="col-md-5">
@@ -126,11 +186,25 @@ const FormBuilder = () => {
                 >
                   Checkboxe
                 </button>
-                <button className="mb-2 mr-2 btn btn-secondary">Select</button>
-                <button className="mb-2 mr-2 btn btn-secondary" name="checkbox">
+                <button
+                  className="mb-2 mr-2 btn btn-secondary"
+                  name="select"
+                  onClick={addFields}
+                >
+                  Select
+                </button>
+                <button
+                  className="mb-2 mr-2 btn btn-secondary"
+                  name="video"
+                  onClick={addVideoFields}
+                >
                   Video
                 </button>
-                <button className="mb-2 btn btn-secondary" name="checkbox">
+                <button
+                  className="mb-2 btn btn-secondary"
+                  name="image"
+                  onClick={addFields}
+                >
                   Image
                 </button>
               </div>
@@ -184,6 +258,52 @@ const FormBuilder = () => {
                     </div>
                   </form>
                 </div>
+              ) : dynamicFormData[currentActiveField] &&
+                dynamicFormData[currentActiveField].type === "video" ? (
+                <div className="tab-pane active in" role="tabpanel">
+                  <form className="customizable-field-options selected">
+                    <div className="form-group">
+                      <label className="form-label">Heading</label>
+                      <input
+                        className="form-control"
+                        name="heading"
+                        value={dynamicFormData[currentActiveField].heading}
+                        onChange={handleVideoTypeHeading}
+                      />
+                    </div>
+                    <div className="form-group">
+                      <label className="form-label">Video</label>
+                      <FileUpload
+                        folder="moduleVideos"
+                        fileType="video/*"
+                        onClick={handleVideoUpload}
+                      />
+                    </div>
+                  </form>
+                </div>
+              ) : dynamicFormData[currentActiveField] &&
+                dynamicFormData[currentActiveField].type === "image" ? (
+                <div className="tab-pane active in" role="tabpanel">
+                  <form className="customizable-field-options selected">
+                    <div className="form-group">
+                      <label className="form-label">Text</label>
+                      <input
+                        className="form-control"
+                        name="text"
+                        value={dynamicFormData[currentActiveField].text}
+                        onChange={handleEditFieldTextChange}
+                      />
+                    </div>
+                    <div className="form-group">
+                      <label className="form-label">Image</label>
+                      <FileUpload
+                        folder="moduleImages"
+                        fileType="image/png,image/jpeg"
+                        onClick={handleImageUpload}
+                      />
+                    </div>
+                  </form>
+                </div>
               ) : null)}
           </div>
         </section>
@@ -191,12 +311,20 @@ const FormBuilder = () => {
 
       <div className="col-md-7">
         <section className="m-2">
-          <ul className="nav nav-tabs">
+          <ul className="nav nav-tabs d-flex justify-content-between mb-3">
             <li className="nav-item">
               <a className={`nav-link active`}>
                 <IoReorderThreeOutline />
                 &nbsp; Editor
               </a>
+            </li>
+            <li
+              type="button"
+              className="btn btn-success"
+              aria-label="Save"
+              onClick={() => onSave(dynamicFormData)}
+            >
+              Save
             </li>
           </ul>
           <div className="tab-content">
@@ -210,6 +338,13 @@ const FormBuilder = () => {
                     id={index}
                     onClick={handleActiveField}
                   >
+                    {currentActiveField == index && (
+                      <IoClose
+                        className="float-end m-1 fs-2"
+                        id={index}
+                        onClick={handleRemoveField}
+                      />
+                    )}
                     <InputText
                       key={index}
                       fields={{
@@ -233,6 +368,13 @@ const FormBuilder = () => {
                     id={index}
                     onClick={handleActiveField}
                   >
+                    {currentActiveField == index && (
+                      <IoClose
+                        className="float-end m-1 fs-2"
+                        id={index}
+                        onClick={handleRemoveField}
+                      />
+                    )}
                     <InputTextarea
                       key={index}
                       fields={{
@@ -244,10 +386,52 @@ const FormBuilder = () => {
                     />
                   </div>
                 </>
+              ) : field.type === "video" ? (
+                <>
+                  <div
+                    className={`p-1 cursor-pointer rounded ${
+                      currentActiveField == index ? styles.bgActive : ""
+                    }`}
+                    id={index}
+                    onClick={handleActiveField}
+                  >
+                    {currentActiveField == index && (
+                      <IoClose
+                        className="float-end m-1 fs-2"
+                        id={index}
+                        onClick={handleRemoveField}
+                      />
+                    )}
+                    <VideoElement
+                      key={index}
+                      index={index}
+                      heading={field.heading}
+                      videoPath={field.videoPath}
+                    />
+                  </div>
+                </>
+              ) : field.type === "image" ? (
+                <>
+                  <div
+                    className={`p-1 cursor-pointer rounded ${
+                      currentActiveField == index ? styles.bgActive : ""
+                    }`}
+                    id={index}
+                    onClick={handleActiveField}
+                  >
+                    {currentActiveField == index && (
+                      <IoClose
+                        className="float-end m-1 fs-2"
+                        id={index}
+                        onClick={handleRemoveField}
+                      />
+                    )}
+                    <Image imagePath={field.imagePath} text={field.text} />
+                  </div>
+                </>
               ) : null
             )}
           </div>
-          <button onClick={getdata}>get data</button>
         </section>
       </div>
     </div>
