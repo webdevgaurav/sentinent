@@ -39,9 +39,10 @@ const FormBuilder = ({ onSave, onClose }) => {
   const addFields = (e) => {
     const newObj = {
       value: "",
-      placeholder: "",
+      text: "Text",
+      placeholder: "Placeholder...",
       type: e.target.name,
-      label: "",
+      label: "Text Field",
     };
     const newArray = [...dynamicFormData, newObj];
     setDynamicFormData(newArray);
@@ -56,7 +57,7 @@ const FormBuilder = ({ onSave, onClose }) => {
     const newObj = {
       videoPath: "",
       type: e.target.name,
-      vidoeType: "",
+      vidoeType: "video/*",
     };
     const newArray = [...dynamicFormData, newObj];
     setDynamicFormData(newArray);
@@ -119,8 +120,9 @@ const FormBuilder = ({ onSave, onClose }) => {
       setDynamicFormData(newArray);
     }
   };
+
   return (
-    <>
+    <div>
       <div className="d-flex align-items-center justify-content-between m-4">
         <button
           type="button"
@@ -444,7 +446,7 @@ const FormBuilder = ({ onSave, onClose }) => {
           </section>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

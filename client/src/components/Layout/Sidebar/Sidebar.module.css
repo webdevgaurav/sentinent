@@ -9,6 +9,17 @@
   margin: 0 1rem !important;
 }
 
+.sidebarContainerList li:hover {
+  background-color: #e4e4e4 !important;
+  border-radius: 10px !important;
+  color: #0f0f0f !important;
+  font-weight: 600 !important;
+}
+
+.sidebarContainerList li {
+  margin: 0.25rem 0 !important;
+}
+
 .navItem {
   color: #706f6f !important;
   padding: 1rem !important;
