@@ -185,7 +185,7 @@ const FormBuilder = ({ _data, onSave, onClose }) => {
   };
 
   return (
-    <div>
+    <div className="overflow-auto" style={{ maxHeight: "55rem" }}>
       <div className="d-flex align-items-center justify-content-between m-4">
         <button
           type="button"

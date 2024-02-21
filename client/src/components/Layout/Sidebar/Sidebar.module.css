@@ -1,4 +1,39 @@
+.sidebarToggle{
+  position: absolute;
+  top: 3.3rem;
+  left: 0;
+  background-color: #000;
+  color: #fff;
+  font-size: 1.25rem;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 0.35rem 0.5rem;
+  border-radius: 0 15px 15px 0;
+  opacity: 0.4;
+  cursor: pointer;
+  transform: scale(1);
+  transition: all 0.3s ease-in-out;
+}
+
+.sidebarToggle:hover{
+  opacity: 1;
+  transform: scale(1.15);
+}
+
+.onToggleActive{
+  left: 280px;
+}
+
+.onToggleActiveSidebar{
+  display: flex !important;
+  position: absolute;
+  transition: left 0.3s ease;
+}
+
 .sidebarContainer {
+  display: flex;
+  flex-direction: column;
   width: 280px;
   background-color: rgb(247, 247, 247);
   border-right: 1px solid rgba(223, 223, 223, 0.6);
@@ -32,4 +67,13 @@
   border-radius: 10px !important;
   color: #0f0f0f !important;
   font-weight: 600 !important;
+}
+
+@media (max-width: 768px) {
+  .sidebarContainer {
+    display: none;
+  }
+  .sidebarToggle{
+    display: flex;
+  }
 }

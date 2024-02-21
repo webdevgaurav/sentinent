@@ -89,8 +89,9 @@ const Module = () => {
         console.error("error", error);
       });
   };
+
   return (
-    <div>
+    <div className="overflow-hidden">
       <AddModule onOpen={show} onClose={handleClose} params={params} />
       {showModuleForm ? (
         <FormBuilder
