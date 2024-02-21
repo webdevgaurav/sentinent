@@ -53,7 +53,7 @@ const SignUp = () => {
     <div className={styles.container}>
       {isSignedUp && <Navigate to="/login" replace={true}/>}
       <div className={styles.signUpLeft}>
-        <div className="spaceBetween">
+        <div className="d-flex align-items-center justify-content-between">
           <h3>Sign Up</h3>
           <Link to={"/login"} className="btn btn-primary">
             Login

@@ -60,7 +60,7 @@ const Login = ({ type }) => {
     <div className={styles.container}>
       {isLoggedIn && <Navigate to="/profile" replace={true} />}
       <div className={styles.loginLeft}>
-        <div className="spaceBetween">
+        <div className="d-flex align-items-center justify-content-between">
           <Link to={"/signup"} className="btn btn-primary">
             Sign Up
           </Link>

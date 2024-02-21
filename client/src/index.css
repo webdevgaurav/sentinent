@@ -4,12 +4,6 @@
   box-sizing: border-box;
 }
 
-.spaceBetween {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
 .loadMore {
   display: flex;
   align-items: center;
@@ -30,6 +24,7 @@
 .cursor-pointer {
   cursor: pointer;
 }
+
 .mr-2{
   margin-right: 0.5rem;
 }

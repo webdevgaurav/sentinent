@@ -7,7 +7,7 @@ import styles from "./Module.module.css";
 import NoRecordFound from "../../../components/Errors/NoRecordFound";
 import CardImage from "../../../components/Cards/CardImage";
 import { MdDownloading } from "react-icons/md";
-import ModuleForm from "./ModuleForm";
+import FormBuilder from "../../../components/FormBuilder/FormBuilder";
 
 const Module = () => {
   const params = useParams();
@@ -54,7 +54,7 @@ const Module = () => {
     setModulePage(1);
     setShow(false);
   };
-  const handleShowModuleForm = (item) => {
+  const handleShowModuleForm = () => {
     setShowModuleForm(true);
   };
   const handleModuleFormClose = () => {
@@ -71,16 +71,14 @@ const Module = () => {
   const handleLoadMoreModule = () => {
     setModulePage(modulePage + 1);
   };
-
+  const handleOnSave = (data) => {
+    console.log(data);
+  };
   return (
     <div>
       <AddModule onOpen={show} onClose={handleClose} params={params} />
       {showModuleForm ? (
-        <ModuleForm
-          onOpen={showModuleForm}
-          onClose={handleModuleFormClose}
-          params={params}
-        />
+        <FormBuilder onSave={handleOnSave} onClose={handleModuleFormClose} />
       ) : (
         <>
           <div className="d-flex align-items-center justify-content-between m-4">
