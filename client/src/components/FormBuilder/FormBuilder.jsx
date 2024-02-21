@@ -8,6 +8,7 @@ import VideoElement from "../Elements/Video/VideoElement";
 import FileUpload from "../Uploader/FileUpload";
 import { IoClose } from "react-icons/io5";
 import Image from "../Elements/Image/Image";
+import Dropdown from "../Elements/Dropdown/Dropdown";
 
 const FormBuilder = ({ onSave, onClose }) => {
   const [dynamicFormData, setDynamicFormData] = useState([]);
@@ -17,25 +18,7 @@ const FormBuilder = ({ onSave, onClose }) => {
     editField: false,
     setting: false,
   });
-  const handleInputChange = (e) => {
-    const { id, type, label, name, value, placeholder } = e.target;
-    const newArray = [...dynamicFormData];
-    newArray[id] = {
-      ...newArray[id],
-      ...{ type, label, name, value, placeholder },
-    };
-    setDynamicFormData(newArray);
-  };
-  const handleFormTabs = (e) => {
-    if (e.target.id) {
-      setTabType({
-        addField: false,
-        editField: false,
-        setting: false,
-        [e.target.id]: true,
-      });
-    }
-  };
+
   const addFields = (e) => {
     const newObj = {
       value: "",
@@ -43,6 +26,23 @@ const FormBuilder = ({ onSave, onClose }) => {
       placeholder: "Placeholder...",
       type: e.target.name,
       label: "Text Field",
+    };
+    const newArray = [...dynamicFormData, newObj];
+    setDynamicFormData(newArray);
+    setTabType({
+      addField: false,
+      editField: true,
+      setting: false,
+    });
+    setCurrentActiveField(newArray.length - 1);
+  };
+  const addDropdownFields = (e) => {
+    const newObj = {
+      value: "",
+      placeholder: "Placeholder...",
+      type: e.target.name,
+      label: "Dropdown Field",
+      options: [],
     };
     const newArray = [...dynamicFormData, newObj];
     setDynamicFormData(newArray);
@@ -67,6 +67,41 @@ const FormBuilder = ({ onSave, onClose }) => {
       setting: false,
     });
     setCurrentActiveField(newArray.length - 1);
+  };
+  const addDropdownOptionFields = () => {
+    const newArray = [...dynamicFormData];
+    newArray[currentActiveField]["options"].push({ label: "", value: "" });
+    console.log(newArray);
+    setDynamicFormData(newArray);
+  };
+
+  const handleDropdownOptions = (e) => {
+    const { id, name, value } = e.target;
+    const newArray = [...dynamicFormData];
+    newArray[currentActiveField]["options"][id] = {
+      ...newArray[currentActiveField]["options"][id],
+      [name]: value,
+    };
+    setDynamicFormData(newArray);
+  };
+  const handleInputChange = (e) => {
+    const { id, type, label, name, value, placeholder } = e.target;
+    const newArray = [...dynamicFormData];
+    newArray[id] = {
+      ...newArray[id],
+      ...{ type, label, name, value, placeholder },
+    };
+    setDynamicFormData(newArray);
+  };
+  const handleFormTabs = (e) => {
+    if (e.target.id) {
+      setTabType({
+        addField: false,
+        editField: false,
+        setting: false,
+        [e.target.id]: true,
+      });
+    }
   };
   const handleActiveField = (e) => {
     setCurrentActiveField(e.target.id);
@@ -119,6 +154,12 @@ const FormBuilder = ({ onSave, onClose }) => {
       newArray.splice(currentActiveField, 1);
       setDynamicFormData(newArray);
     }
+  };
+  const handleRemoveOptionsField = (e) => {
+    const { id } = e.target;
+    const newArray = [...dynamicFormData];
+    newArray[currentActiveField]["options"].splice(id, 1);
+    setDynamicFormData(newArray);
   };
 
   return (
@@ -207,10 +248,10 @@ const FormBuilder = ({ onSave, onClose }) => {
                   </button>
                   <button
                     className="mb-2 mr-2 btn btn-secondary"
-                    name="select"
-                    onClick={addFields}
+                    name="dropdown"
+                    onClick={addDropdownFields}
                   >
-                    Select
+                    Dropdown
                   </button>
                   <button
                     className="mb-2 mr-2 btn btn-secondary"
@@ -233,7 +274,7 @@ const FormBuilder = ({ onSave, onClose }) => {
                 dynamicFormData[currentActiveField].type === "text" ? (
                   <div className="tab-pane active in" role="tabpanel">
                     <form className="customizable-field-options selected">
-                      <div className="form-group">
+                      <div className="form-group mb-3 mt-3">
                         <label className="form-label">Title</label>
                         <input
                           className="form-control"
@@ -242,7 +283,7 @@ const FormBuilder = ({ onSave, onClose }) => {
                           onChange={handleEditFieldTextChange}
                         />
                       </div>
-                      <div className="form-group">
+                      <div className="form-group mb-3 mt-3">
                         <label className="form-label">Placeholder</label>
                         <input
                           className="form-control"
@@ -259,7 +300,7 @@ const FormBuilder = ({ onSave, onClose }) => {
                   dynamicFormData[currentActiveField].type === "textarea" ? (
                   <div className="tab-pane active in" role="tabpanel">
                     <form className="customizable-field-options selected">
-                      <div className="form-group">
+                      <div className="form-group mb-3 mt-3">
                         <label className="form-label">Title</label>
                         <input
                           className="form-control"
@@ -268,7 +309,7 @@ const FormBuilder = ({ onSave, onClose }) => {
                           onChange={handleEditFieldTextChange}
                         />
                       </div>
-                      <div className="form-group">
+                      <div className="form-group mb-3 mt-3">
                         <label className="form-label">Placeholder</label>
                         <input
                           className="form-control"
@@ -285,7 +326,7 @@ const FormBuilder = ({ onSave, onClose }) => {
                   dynamicFormData[currentActiveField].type === "video" ? (
                   <div className="tab-pane active in" role="tabpanel">
                     <form className="customizable-field-options selected">
-                      <div className="form-group">
+                      <div className="form-group mb-3 mt-3">
                         <label className="form-label">Heading</label>
                         <input
                           className="form-control"
@@ -294,7 +335,7 @@ const FormBuilder = ({ onSave, onClose }) => {
                           onChange={handleVideoTypeHeading}
                         />
                       </div>
-                      <div className="form-group">
+                      <div className="form-group mb-3 mt-3">
                         <label className="form-label">Video</label>
                         <FileUpload
                           folder="moduleVideos"
@@ -308,7 +349,7 @@ const FormBuilder = ({ onSave, onClose }) => {
                   dynamicFormData[currentActiveField].type === "image" ? (
                   <div className="tab-pane active in" role="tabpanel">
                     <form className="customizable-field-options selected">
-                      <div className="form-group">
+                      <div className="form-group mb-3 mt-3">
                         <label className="form-label">Text</label>
                         <input
                           className="form-control"
@@ -317,13 +358,94 @@ const FormBuilder = ({ onSave, onClose }) => {
                           onChange={handleEditFieldTextChange}
                         />
                       </div>
-                      <div className="form-group">
+                      <div className="form-group mb-3 mt-3">
                         <label className="form-label">Image</label>
                         <FileUpload
                           folder="moduleImages"
                           fileType="image/png,image/jpeg"
                           onClick={handleImageUpload}
                         />
+                      </div>
+                    </form>
+                  </div>
+                ) : dynamicFormData[currentActiveField] &&
+                  dynamicFormData[currentActiveField].type === "dropdown" ? (
+                  <div className="tab-pane active in" role="tabpanel">
+                    <form className="customizable-field-options selected">
+                      <div className="form-group mb-3 mt-3">
+                        <label className="form-label">Title</label>
+                        <input
+                          className="form-control"
+                          name="label"
+                          value={dynamicFormData[currentActiveField].label}
+                          onChange={handleEditFieldTextChange}
+                        />
+                      </div>
+                      <div className="form-group mb-3 mt-3">
+                        <label className="form-label">Placeholder</label>
+                        <input
+                          className="form-control"
+                          name="placeholder"
+                          value={
+                            dynamicFormData[currentActiveField].placeholder
+                          }
+                          onChange={handleEditFieldTextChange}
+                        />
+                      </div>
+                      <div className="form-group">
+                        <div className="d-flex align-items-center justify-content-between mb-3 mt-3">
+                          <label className="form-label">Options</label>
+                          <button
+                            type="button"
+                            className="btn btn-light btn-sm text-center text-success"
+                            onClick={addDropdownOptionFields}
+                          >
+                            <GrAdd />
+                          </button>
+                        </div>
+                        {dynamicFormData[currentActiveField]["options"] &&
+                          dynamicFormData[currentActiveField]["options"].map(
+                            (item, index) => (
+                              <div key={index} className="form-group mb-3 mt-3">
+                                <label className="form-label">
+                                  Option {index + 1}
+                                </label>
+                                <div className="d-flex align-items-center justify-content-between">
+                                  <div className="d-flex align-items-center">
+                                    <input
+                                      className="form-control mr-1"
+                                      placeholder="label"
+                                      value={
+                                        dynamicFormData[currentActiveField][
+                                          "options"
+                                        ][index].label
+                                      }
+                                      id={index}
+                                      name="label"
+                                      onChange={handleDropdownOptions}
+                                    />
+                                    <input
+                                      className="form-control"
+                                      placeholder="value"
+                                      value={
+                                        dynamicFormData[currentActiveField][
+                                          "options"
+                                        ][index].value
+                                      }
+                                      id={index}
+                                      name="value"
+                                      onChange={handleDropdownOptions}
+                                    />
+                                  </div>
+                                  <IoClose
+                                    className="float-end m-1 fs-2 text-danger cursor-pointer"
+                                    id={index}
+                                    onClick={handleRemoveOptionsField}
+                                  />
+                                </div>
+                              </div>
+                            )
+                          )}
                       </div>
                     </form>
                   </div>
@@ -348,7 +470,8 @@ const FormBuilder = ({ onSave, onClose }) => {
                   <>
                     <div
                       className={`p-1 cursor-pointer rounded ${
-                        currentActiveField == index && styles.bgActive} ${styles.boxShadow} mt-2`}
+                        currentActiveField == index && styles.bgActive
+                      } ${styles.boxShadow} mt-2`}
                       id={index}
                       onClick={handleActiveField}
                     >
@@ -377,7 +500,8 @@ const FormBuilder = ({ onSave, onClose }) => {
                   <>
                     <div
                       className={`p-1 cursor-pointer rounded ${
-                        currentActiveField == index && styles.bgActive} ${styles.boxShadow} mt-2`}
+                        currentActiveField == index && styles.bgActive
+                      } ${styles.boxShadow} mt-2`}
                       id={index}
                       onClick={handleActiveField}
                     >
@@ -403,7 +527,8 @@ const FormBuilder = ({ onSave, onClose }) => {
                   <>
                     <div
                       className={`p-1 pt-3 cursor-pointer rounded ${
-                        currentActiveField == index && styles.bgActive} ${styles.boxShadow} mt-2`}
+                        currentActiveField == index && styles.bgActive
+                      } ${styles.boxShadow} mt-2`}
                       id={index}
                       onClick={handleActiveField}
                     >
@@ -426,7 +551,8 @@ const FormBuilder = ({ onSave, onClose }) => {
                   <>
                     <div
                       className={`p-1 pt-3 cursor-pointer rounded ${
-                        currentActiveField == index && styles.bgActive} ${styles.boxShadow} mt-2`}
+                        currentActiveField == index && styles.bgActive
+                      } ${styles.boxShadow} mt-2`}
                       id={index}
                       onClick={handleActiveField}
                     >
@@ -438,6 +564,31 @@ const FormBuilder = ({ onSave, onClose }) => {
                         />
                       )}
                       <Image imagePath={field.imagePath} text={field.text} />
+                    </div>
+                  </>
+                ) : field.type === "dropdown" ? (
+                  <>
+                    <div
+                      className={`p-1 pt-3 cursor-pointer rounded ${
+                        currentActiveField == index && styles.bgActive
+                      } ${styles.boxShadow} mt-2`}
+                      id={index}
+                      onClick={handleActiveField}
+                    >
+                      {currentActiveField == index && (
+                        <IoClose
+                          className="float-end m-1 fs-2"
+                          id={index}
+                          onClick={handleRemoveField}
+                        />
+                      )}
+                      <Dropdown
+                        id={index}
+                        options={field.options}
+                        title={field.label}
+                        value={field.value}
+                        placeholder={field.placeholder}
+                      />
                     </div>
                   </>
                 ) : null
