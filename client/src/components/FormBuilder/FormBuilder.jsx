@@ -346,8 +346,7 @@ const FormBuilder = ({ onSave, onClose }) => {
                   <>
                     <div
                       className={`p-1 cursor-pointer rounded ${
-                        currentActiveField == index ? styles.bgActive : ""
-                      } ${styles.boxShadow} mt-2`}
+                        currentActiveField == index && styles.bgActive} ${styles.boxShadow} mt-2`}
                       id={index}
                       onClick={handleActiveField}
                     >
@@ -376,8 +375,7 @@ const FormBuilder = ({ onSave, onClose }) => {
                   <>
                     <div
                       className={`p-1 cursor-pointer rounded ${
-                        currentActiveField == index ? styles.bgActive : ""
-                      } ${styles.boxShadow} mt-2`}
+                        currentActiveField == index && styles.bgActive} ${styles.boxShadow} mt-2`}
                       id={index}
                       onClick={handleActiveField}
                     >
@@ -402,9 +400,8 @@ const FormBuilder = ({ onSave, onClose }) => {
                 ) : field.type === "video" ? (
                   <>
                     <div
-                      className={`p-1 cursor-pointer rounded ${
-                        currentActiveField == index ? styles.bgActive : ""
-                      } ${styles.boxShadow} mt-2`}
+                      className={`p-1 pt-3 cursor-pointer rounded ${
+                        currentActiveField == index && styles.bgActive} ${styles.boxShadow} mt-2`}
                       id={index}
                       onClick={handleActiveField}
                     >
@@ -426,9 +423,8 @@ const FormBuilder = ({ onSave, onClose }) => {
                 ) : field.type === "image" ? (
                   <>
                     <div
-                      className={`p-1 cursor-pointer rounded ${
-                        currentActiveField == index ? styles.bgActive : ""
-                      } ${styles.boxShadow} mt-2`}
+                      className={`p-1 pt-3 cursor-pointer rounded ${
+                        currentActiveField == index && styles.bgActive} ${styles.boxShadow} mt-2`}
                       id={index}
                       onClick={handleActiveField}
                     >
