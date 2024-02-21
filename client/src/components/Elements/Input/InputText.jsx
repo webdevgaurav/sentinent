@@ -1,5 +1,4 @@
-const InputText = ({ fields, onChange }) => {
-  const { index, type, label, name, value, placeholder } = fields;
+const InputText = ({ index, type, label, name, value, placeholder, onChange }) => {
   return (
     <>
       <label htmlFor={index} className="form-label">

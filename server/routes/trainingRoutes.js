@@ -22,7 +22,7 @@ router.put('/phases/create/:phasesId', createPhases.updatePhases);
 
 router.get('/module/get/:phasesId', getModule.getModules);
 router.get('/module/get', getModule.getModule);
-router.post('/module/create', createModule.createModule);
 router.put('/module/create/:moduleId', createModule.updateModule);
+router.post('/module/create', createModule.createModule);
 
 module.exports = router;

@@ -1,7 +1,7 @@
 import { GrAdd, GrEdit, GrSettingsOption } from "react-icons/gr";
 import { IoReorderThreeOutline } from "react-icons/io5";
 import InputText from "../Elements/Input/InputText";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import InputTextarea from "../Elements/Input/InputTextarea";
 import styles from "./FormBuilder.module.css";
 import VideoElement from "../Elements/Video/VideoElement";
@@ -9,8 +9,9 @@ import FileUpload from "../Uploader/FileUpload";
 import { IoClose } from "react-icons/io5";
 import Image from "../Elements/Image/Image";
 import Dropdown from "../Elements/Dropdown/Dropdown";
+import { BASE_URL } from "../../../config";
 
-const FormBuilder = ({ onSave, onClose }) => {
+const FormBuilder = ({ _data, onSave, onClose }) => {
   const [dynamicFormData, setDynamicFormData] = useState([]);
   const [currentActiveField, setCurrentActiveField] = useState(-1);
   const [tabType, setTabType] = useState({
@@ -18,6 +19,22 @@ const FormBuilder = ({ onSave, onClose }) => {
     editField: false,
     setting: false,
   });
+
+  useEffect(() => {
+    fetch(`${BASE_URL}/training/module/get?id=${_data._id}`)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .then((res) => {
+        setDynamicFormData(res.content ?? []);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  }, []);
 
   const addFields = (e) => {
     const newObj = {
@@ -84,12 +101,17 @@ const FormBuilder = ({ onSave, onClose }) => {
     };
     setDynamicFormData(newArray);
   };
-  const handleInputChange = (e) => {
-    const { id, type, label, name, value, placeholder } = e.target;
+  const handleSelectedValue = (value) => {
     const newArray = [...dynamicFormData];
-    newArray[id] = {
-      ...newArray[id],
-      ...{ type, label, name, value, placeholder },
+    newArray[currentActiveField].value = value;
+    setDynamicFormData(newArray);
+  };
+  const handleInputChange = (e) => {
+    const { value } = e.target;
+    const newArray = [...dynamicFormData];
+    newArray[currentActiveField] = {
+      ...newArray[currentActiveField],
+      value: value,
     };
     setDynamicFormData(newArray);
   };
@@ -484,14 +506,12 @@ const FormBuilder = ({ onSave, onClose }) => {
                       )}
                       <InputText
                         key={index}
-                        fields={{
-                          index: index,
-                          type: field.type,
-                          label: field.label,
-                          name: field.name,
-                          value: field.value,
-                          placeholder: field.placeholder,
-                        }}
+                        index={index}
+                        type={field.type}
+                        label={field.label}
+                        name={field.name}
+                        value={field.value}
+                        placeholder={field.placeholder}
                         onChange={handleInputChange}
                       />
                     </div>
@@ -587,7 +607,7 @@ const FormBuilder = ({ onSave, onClose }) => {
                         options={field.options}
                         title={field.label}
                         value={field.value}
-                        placeholder={field.placeholder}
+                        onClick={handleSelectedValue}
                       />
                     </div>
                   </>

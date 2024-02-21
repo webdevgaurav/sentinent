@@ -8,11 +8,15 @@ import NoRecordFound from "../../../components/Errors/NoRecordFound";
 import CardImage from "../../../components/Cards/CardImage";
 import { MdDownloading } from "react-icons/md";
 import FormBuilder from "../../../components/FormBuilder/FormBuilder";
+import axios from "axios";
 
 const Module = () => {
   const params = useParams();
   const [show, setShow] = useState(false);
   const [showModuleForm, setShowModuleForm] = useState(false);
+  const [currentModule, setCurrentModule] = useState({
+    content: [],
+  });
   const [modulePage, setModulePage] = useState(1);
   const [moduleLoader, setModuleLoader] = useState(false);
   const [search, setSearch] = useState("");
@@ -54,8 +58,9 @@ const Module = () => {
     setModulePage(1);
     setShow(false);
   };
-  const handleShowModuleForm = () => {
+  const handleShowModuleForm = (e) => {
     setShowModuleForm(true);
+    setCurrentModule((prevState) => ({ ...prevState, ...e }));
   };
   const handleModuleFormClose = () => {
     setShowModuleForm(false);
@@ -72,13 +77,27 @@ const Module = () => {
     setModulePage(modulePage + 1);
   };
   const handleOnSave = (data) => {
-    console.log(data);
+    axios
+      .put(`${BASE_URL}/training/module/create/${currentModule._id}`, {
+        content: data,
+      })
+      .then((res) => {
+        console.log(res.data)
+        handleModuleFormClose();
+      })
+      .catch((error) => {
+        console.error("error", error);
+      });
   };
   return (
     <div>
       <AddModule onOpen={show} onClose={handleClose} params={params} />
       {showModuleForm ? (
-        <FormBuilder onSave={handleOnSave} onClose={handleModuleFormClose} />
+        <FormBuilder
+          _data={currentModule}
+          onSave={handleOnSave}
+          onClose={handleModuleFormClose}
+        />
       ) : (
         <>
           <div className="d-flex align-items-center justify-content-between m-4">

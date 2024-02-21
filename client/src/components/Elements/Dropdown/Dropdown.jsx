@@ -1,4 +1,4 @@
-const Dropdown = ({ id, options, title, value, placeholder }) => {
+const Dropdown = ({ id, options, title, value, onClick }) => {
   return (
     <>
       <label htmlFor={id} className="form-label">
@@ -9,12 +9,19 @@ const Dropdown = ({ id, options, title, value, placeholder }) => {
         className="form-select"
         aria-label="Default select example"
       >
-        <option selected id={id}>Open this select menu</option>
-        {options && options.map((item, index) => (
-          <option id={id} key={index} value={item.value}>
-            {item.label}
-          </option>
-        ))}
+        <option id={id}>Open this select menu</option>
+        {options &&
+          options.map((item, index) => (
+            <option
+              id={id}
+              key={index}
+              value={item.value}
+              selected={item.value === value}
+              onClick={() => onClick(item.value)}
+            >
+              {item.label}
+            </option>
+          ))}
       </select>
     </>
   );

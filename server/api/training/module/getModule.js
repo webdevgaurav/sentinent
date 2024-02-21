@@ -2,7 +2,7 @@ const Module = require("../../../models/moduleModel");
 
 exports.getModule = async (req, res) => {
   try {
-    const module = await Module.findOne({ _id: req.params.id });
+    const module = await Module.findOne({ _id: req.query.id });
     return res.status(201).json(module);
   } catch (error) {
     throw error.message;
