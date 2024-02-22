@@ -127,6 +127,11 @@ const FormBuilder = ({ _data, onSave, onClose }) => {
   };
   const handleActiveField = (e) => {
     setCurrentActiveField(e.target.id);
+    setTabType({
+      addField: false,
+      editField: true,
+      setting: false,
+    });
   };
   const handleEditFieldTextChange = (e) => {
     const { name, value } = e.target;
