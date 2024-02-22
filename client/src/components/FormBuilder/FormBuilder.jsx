@@ -32,7 +32,7 @@ const FormBuilder = ({ _data, onSave, onClose }) => {
         setDynamicFormData(res.content ?? []);
       })
       .catch((error) => {
-        console.error("Error:", error);
+        throw error;
       });
   }, []);
 
@@ -88,7 +88,6 @@ const FormBuilder = ({ _data, onSave, onClose }) => {
   const addDropdownOptionFields = () => {
     const newArray = [...dynamicFormData];
     newArray[currentActiveField]["options"].push({ label: "", value: "" });
-    console.log(newArray);
     setDynamicFormData(newArray);
   };
 

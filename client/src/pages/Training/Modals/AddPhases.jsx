@@ -48,7 +48,7 @@ const AddPhases = ({ onOpen, onClose, productId }) => {
         onClose();
       })
       .catch((error) => {
-        console.error("Error:", error);
+        throw error;
       });
   };
   return (

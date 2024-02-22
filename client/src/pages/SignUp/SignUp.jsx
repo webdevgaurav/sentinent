@@ -45,7 +45,7 @@ const SignUp = () => {
         setIsSignedUp(true);
       })
       .catch((error) => {
-        console.error("Error:", error);
+        throw error;
       });
   };
 

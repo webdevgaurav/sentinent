@@ -45,7 +45,7 @@ const Module = () => {
           }
         })
         .catch((error) => {
-          console.error("Error:", error);
+          throw error;
         });
     }
   }, [modulePage]);
@@ -81,12 +81,11 @@ const Module = () => {
       .put(`${BASE_URL}/training/module/create/${currentModule._id}`, {
         content: data,
       })
-      .then((res) => {
-        console.log(res.data)
+      .then(() => {
         handleModuleFormClose();
       })
       .catch((error) => {
-        console.error("error", error);
+        throw error;
       });
   };
 

@@ -49,7 +49,7 @@ const AddModule = ({ onOpen, onClose, params }) => {
         onClose();
       })
       .catch((error) => {
-        console.error("Error:", error);
+        throw error;
       });
   };
   return (

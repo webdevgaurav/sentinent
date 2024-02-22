@@ -40,7 +40,7 @@ const Phases = () => {
           }
         })
         .catch((error) => {
-          console.error("Error:", error);
+          throw error;
         });
     }
   }, [phasesPage]);

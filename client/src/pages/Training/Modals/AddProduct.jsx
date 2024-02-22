@@ -48,7 +48,7 @@ const AddProduct = ({ onOpen, onClose }) => {
         onClose();
       })
       .catch((error) => {
-        console.error("Error:", error);
+        throw error;
       });
   };
   return (

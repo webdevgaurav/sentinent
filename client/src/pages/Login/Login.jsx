@@ -16,7 +16,7 @@ const Login = ({ type }) => {
     return <Navigate to="/login" />;
   }
 
-  if(localStorage.getItem("token")){
+  if (localStorage.getItem("token")) {
     return <Navigate to="/dashboard" />;
   }
 

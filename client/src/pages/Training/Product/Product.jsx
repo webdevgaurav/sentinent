@@ -38,7 +38,7 @@ const Product = () => {
           }
         })
         .catch((error) => {
-          console.error("Error:", error);
+          throw error;
         });
     }
   }, [productPage]);

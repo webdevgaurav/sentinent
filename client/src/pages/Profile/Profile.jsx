@@ -37,7 +37,7 @@ const Profile = () => {
           localStorage.setItem("user", JSON.stringify(data));
         })
         .catch((error) => {
-          console.error("Error:", error);
+          throw error;
         });
     }
   }, []);
@@ -82,7 +82,7 @@ const Profile = () => {
         localStorage.setItem("user", JSON.stringify(data));
       })
       .catch((error) => {
-        console.error("Error:", error);
+        throw error;
       });
   }
 
