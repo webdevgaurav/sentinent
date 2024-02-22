@@ -1,12 +1,16 @@
 import { Link } from "react-router-dom";
 import styles from "./Header.module.css";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { IoIosNotifications, IoIosNotificationsOutline } from "react-icons/io";
+import { BASE_URL } from "../../../../config";
+import UserContext from "../../../contexts/UserContext";
 
 const Header = ({ headerTab }) => {
   var { heading } = headerTab;
   const [dropdownShow, setDropdownShow] = useState(false);
   const [notification, setNotification] = useState(false);
+  const { userInfo } =
+  useContext(UserContext);
 
   const handleHeaderDropdown = () => {
     setDropdownShow((prevState) => !prevState);
@@ -46,7 +50,7 @@ const Header = ({ headerTab }) => {
               onClick={handleHeaderDropdown}
             >
               <img
-                src="https://github.com/mdo.png"
+                src={`${BASE_URL+userInfo.profile}`}
                 alt="mdo"
                 width="32"
                 height="32"

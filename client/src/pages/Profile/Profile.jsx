@@ -1,46 +1,14 @@
-import { useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import styles from "./Profile.module.css";
 import { BASE_URL } from "../../../config";
 import { Navigate } from "react-router-dom";
 import FileUpload from "../../components/Uploader/FileUpload";
+import UserContext from "../../contexts/UserContext";
 
 const Profile = () => {
-  const [isUserLoggedIn, setIsUserLoggedIn] = useState(
-    !!localStorage.getItem("token")
-  );
-  const [isUserUpdated, setIsUserUpdated] = useState(false);
-  const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    username: "",
-    city: "",
-    state: "",
-    zipcode: "",
-    profile: "",
-  });
-
-  useEffect(() => {
-    let user = localStorage.getItem("user");
-    if (user) {
-      user = JSON.parse(user);
-      fetch(`${BASE_URL}/users/get/${user.email}`)
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error("Network response was not ok");
-          }
-          return response.json();
-        })
-        .then((data) => {
-          user = data;
-          setIsUserLoggedIn(true);
-          setFormData(user);
-          localStorage.setItem("user", JSON.stringify(data));
-        })
-        .catch((error) => {
-          throw error;
-        });
-    }
-  }, []);
+  const { userInfo, updateUserInfo, isUserLoggedIn, isUserUpdated } =
+    useContext(UserContext);
+  const [formData, setFormData] = useState(userInfo);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -49,7 +17,7 @@ const Profile = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    submitUser();
+    updateUserInfo(formData);
   };
 
   const handleUpload = async (path) => {
@@ -60,40 +28,18 @@ const Profile = () => {
     setFormData({ ...formData, profile: path });
   };
 
-  function submitUser() {
-    fetch(`${BASE_URL}/users/create/${formData._id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        setIsUserUpdated(true);
-        setTimeout(() => {
-          setIsUserUpdated(false);
-        }, 2000);
-        localStorage.setItem("user", JSON.stringify(data));
-      })
-      .catch((error) => {
-        throw error;
-      });
-  }
-
   return (
     <>
       {!isUserLoggedIn && <Navigate to="/login" replace={true} />}
       <div className={styles.container}>
         <div className="d-flex">
-          <img src={`${BASE_URL+formData.profile}`} alt="Preview" />
+          <img src={`${BASE_URL + formData.profile}`} alt="Preview" />
         </div>
-        <FileUpload folder="profiles" fileType="image/png,image/jpeg" onClick={handleUpload} />
+        <FileUpload
+          folder="profiles"
+          fileType="image/png,image/jpeg"
+          onClick={handleUpload}
+        />
 
         <form className="row g-3">
           <div className="col-md-4">
