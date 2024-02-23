@@ -39,7 +39,7 @@ const SideItem = ({ item }) => {
           ></i>
         </div>
         {open && (
-          <li className={`nav-item ${styles.subNavItem}`}>
+          <li className={`nav-item mt-1 ${styles.subNavItem}`}>
             {childrens.map((item, index) => (
               <SideItem key={index} item={item} />
             ))}

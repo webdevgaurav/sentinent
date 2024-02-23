@@ -130,3 +130,11 @@ body {
 }
 
 /* sidebar component */
+
+/* Colors */
+
+.danger {
+  color: rgb(248, 66, 66) !important;
+}
+
+

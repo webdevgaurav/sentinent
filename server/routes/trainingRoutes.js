@@ -3,6 +3,7 @@ const router = express.Router();
 
 const createProduct = require('../api/training/products/createProduct');
 const getProducts = require('../api/training/products/getProducts');
+const deleteProduct = require('../api/training/products/deleteProduct');
 
 const createPhases = require('../api/training/phases/createPhases');
 const getPhases = require('../api/training/phases/getPhases');
@@ -14,6 +15,7 @@ router.get('/products/get/:id', getProducts.getProduct);
 router.get('/products/get', getProducts.getProducts);
 router.post('/products/create', createProduct.createProduct);
 router.put('/products/create/:productId', createProduct.updateProduct);
+router.delete('/products/delete/:productId', deleteProduct.deleteProduct);
 
 router.get('/phases/get/:productId', getPhases.getPhases);
 router.get('/phases/get', getPhases.getPhase);
