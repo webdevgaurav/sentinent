@@ -6,14 +6,28 @@ import { useContext } from "react";
 import SidebarContext from "../../../contexts/SidebarContext";
 
 const Sidebar = () => {
-  const { sidebarData, toggleSidebar } = useContext(SidebarContext);
+  const { sidebarData, toggleSidebar, handleToggleSidebar } =
+    useContext(SidebarContext);
+
   return (
     <>
-      <div className={`h-100 ${styles.sidebarContainer} ${toggleSidebar ? styles.toggleSidebar : ''}`}>
+      <div
+        className={`sidebarToggleBtn ${
+          toggleSidebar ? 'sidebarOpen' : ""
+        }`}
+        onClick={handleToggleSidebar}
+      >
+        <i className="bi bi-chevron-double-right"></i>
+      </div>
+      <div
+        className={`h-100 sidebarContainer ${
+          toggleSidebar ?'toggleSidebar' : ""
+        }`}
+      >
         <Link to="/dashboard" className="mb-3">
           <img src="/assets/logo1.png" className="img-fluid" alt="sentinent" />
         </Link>
-        <ul className={styles.sidebarContainerList}>
+        <ul className='sidebarContainerList'>
           {sidebarData.map((item) => (
             <SideItem key={item.id} item={item} />
           ))}

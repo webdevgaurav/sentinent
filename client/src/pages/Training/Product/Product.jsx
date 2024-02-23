@@ -65,7 +65,7 @@ const Product = () => {
   const handleNavigateToModule = (item) => {
     navigate(`/training/phases/${item._id}`);
   };
-  
+
   return (
     <>
       <AddProduct onOpen={show} onClose={handleClose} />

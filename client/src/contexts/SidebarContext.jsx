@@ -57,10 +57,10 @@ export const SidebarProvider = ({ children }) => {
     <SidebarContext.Provider
       value={{
         sidebarData,
-        handleSidebarTabChange,
         selectedTab,
-        handleToggleSidebar,
         toggleSidebar,
+        handleSidebarTabChange,
+        handleToggleSidebar,
       }}
     >
       {children}

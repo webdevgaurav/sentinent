@@ -7,7 +7,7 @@ import UserContext from "../../../contexts/UserContext";
 import SidebarContext from "../../../contexts/SidebarContext";
 
 const Header = () => {
-  const { selectedTab, handleToggleSidebar } = useContext(SidebarContext);
+  const { selectedTab } = useContext(SidebarContext);
   const [dropdownShow, setDropdownShow] = useState(false);
   const [notification, setNotification] = useState(false);
   const { userInfo } = useContext(UserContext);
@@ -27,10 +27,7 @@ const Header = () => {
   return (
     <header className={`p-3 border-bottom ${styles.headerContainer}`}>
       <div className={`d-flex ${styles.containerMargin}`}>
-        <div className="d-flex align-items-center">
-          {/* <IoMenuOutline className="fs-4 mr-1 cursor-pointer" onClick={handleToggleSidebar}/> */}
-          <h3 className="m-0">{selectedTab}</h3>
-        </div>
+        <h3 className="m-0">{selectedTab}</h3>
         <div className="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
           {!notification ? (
             <IoIosNotifications
