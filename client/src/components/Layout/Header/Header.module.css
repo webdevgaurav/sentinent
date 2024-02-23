@@ -7,8 +7,26 @@
   right: 0;
 }
 
-.notificationIcon{
+.notificationIcon {
   margin: 0 2rem;
   font-size: 1.5rem;
   cursor: pointer;
+}
+
+.headerContainer {
+  position: fixed;
+  top: 0;
+  left: 280px;
+  width: calc(100% - 280px);
+  height: 60px;
+  padding: 10px 20px;
+  background-color: #fff;
+  z-index: 1001;
+}
+
+@media screen and (max-width: 768px) {
+  .headerContainer {
+    left: 0;
+    width: 100%;
+  }
 }

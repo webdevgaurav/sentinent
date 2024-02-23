@@ -3,6 +3,7 @@ import ReactDOM from "react-dom/client";
 import App from "./pages/App.jsx";
 import "./index.css";
 import "bootstrap/dist/css/bootstrap.min.css";
+import 'bootstrap-icons/font/bootstrap-icons.css';
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import myntraStore from "./store/index.js";
@@ -18,6 +19,7 @@ import Notes from "./pages/Notes/Notes.jsx";
 import Product from "./pages/Training/Product/Product.jsx";
 import Phases from "./pages/Training/Phases/Phases.jsx";
 import Module from "./pages/Training/Module/Module.jsx";
+import Client from "./pages/Coaching/Client/Client.jsx";
 
 const router = createBrowserRouter([
   {
@@ -61,6 +63,10 @@ const router = createBrowserRouter([
       {
         path: "coaching",
         element: <Coaching />,
+      },
+      {
+        path: "client",
+        element: <Client />,
       },
       {
         path: "tasks",

@@ -1,16 +1,16 @@
 import { Link } from "react-router-dom";
 import styles from "./Header.module.css";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { IoIosNotifications, IoIosNotificationsOutline } from "react-icons/io";
 import { BASE_URL } from "../../../../config";
 import UserContext from "../../../contexts/UserContext";
+import SidebarContext from "../../../contexts/SidebarContext";
 
-const Header = ({ headerTab }) => {
-  var { heading } = headerTab;
+const Header = () => {
+  const { selectedTab, handleToggleSidebar } = useContext(SidebarContext);
   const [dropdownShow, setDropdownShow] = useState(false);
   const [notification, setNotification] = useState(false);
-  const { userInfo } =
-  useContext(UserContext);
+  const { userInfo } = useContext(UserContext);
 
   const handleHeaderDropdown = () => {
     setDropdownShow((prevState) => !prevState);
@@ -25,9 +25,12 @@ const Header = ({ headerTab }) => {
   };
 
   return (
-    <header className="p-3 border-bottom">
+    <header className={`p-3 border-bottom ${styles.headerContainer}`}>
       <div className={`d-flex ${styles.containerMargin}`}>
-        <h3>{heading}</h3>
+        <div className="d-flex align-items-center">
+          {/* <IoMenuOutline className="fs-4 mr-1 cursor-pointer" onClick={handleToggleSidebar}/> */}
+          <h3 className="m-0">{selectedTab}</h3>
+        </div>
         <div className="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
           {!notification ? (
             <IoIosNotifications
@@ -50,7 +53,7 @@ const Header = ({ headerTab }) => {
               onClick={handleHeaderDropdown}
             >
               <img
-                src={`${BASE_URL+userInfo.profile}`}
+                src={`${BASE_URL + userInfo.profile}`}
                 alt="mdo"
                 width="32"
                 height="32"

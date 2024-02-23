@@ -1,7 +1,28 @@
+@import url("https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,200..1000;1,200..1000&display=swap");
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100vh;
+}
+
+body {
+  font-family: "Mulish", sans-serif !important;
+  font-optical-sizing: auto !important;
+  font-weight: 300 !important;
+  font-style: normal !important;
+}
+
+.main-content {
+  margin-top: 30px;
+  margin-left: 280px;
+  padding: 20px;
 }
 
 .loadMore {
@@ -10,14 +31,14 @@
   justify-content: center;
 }
 
-.loadMore > a{
+.loadMore > a {
   border-radius: 15px;
   background-color: rgb(243, 243, 243);
   text-align: center;
   cursor: pointer;
   padding: 0.5rem 1rem;
 }
-.loadMore>a:hover {
+.loadMore > a:hover {
   background-color: #d9d9d9;
 }
 
@@ -25,15 +46,21 @@
   cursor: pointer;
 }
 
-.mr-1{
+.mr-1 {
   margin-right: 0.25rem;
 }
-.mr-2{
+.mr-2 {
   margin-right: 0.5rem;
 }
-.mr-3{
+.mr-3 {
   margin-right: 0.75rem;
 }
-.mr-4{
+.mr-4 {
   margin-right: 1rem;
+}
+
+@media screen and (max-width: 768px) {
+  .main-content {
+    margin-left: 0;
+  }
 }
