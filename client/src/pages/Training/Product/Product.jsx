@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { MdDownloading } from "react-icons/md";
-import { IoMdAdd, IoMdTrash } from "react-icons/io";
+import { IoMdAdd } from "react-icons/io";
 
 import AddProduct from "../Modals/AddProduct";
 import CardImage from "../../../components/Cards/CardImage";
@@ -10,11 +10,17 @@ import NoRecordFound from "../../../components/Errors/NoRecordFound";
 import styles from "./Product.module.css";
 import DeleteItem from "../../../components/Delete/DeleteItem";
 import axios from "axios";
+import ToastMessage from "../../../components/Elements/Toast/ToastMessage";
 
 const Product = () => {
   const [show, setShow] = useState(false);
   const [showDelete, setShowDelete] = useState(false);
   const [itemDelete, setItemDelete] = useState({});
+  const [eventMessage, setEventMessage] = useState({
+    type: "",
+    title: "",
+    message: "",
+  });
   const [productPage, setProductPage] = useState(1);
   const [productLoader, setProductLoader] = useState(false);
   const [search, setSearch] = useState("");
@@ -73,6 +79,18 @@ const Product = () => {
       .then(() => {
         setItemDelete({});
         setShowDelete(false);
+        setEventMessage({
+          type: "success",
+          title: item.title,
+          message: "Product deleted succesfully",
+        });
+        setTimeout(() => {
+          setEventMessage({
+            type: "",
+            title: "",
+            message: "",
+          });
+        }, 3000);
       })
       .catch((error) => {
         throw error;
@@ -96,6 +114,10 @@ const Product = () => {
 
   return (
     <>
+      <ToastMessage
+        show={eventMessage.title ? true : false}
+        toast={eventMessage}
+      />
       <DeleteItem
         item={itemDelete}
         onOpen={showDelete}
