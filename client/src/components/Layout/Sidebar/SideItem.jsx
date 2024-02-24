@@ -20,19 +20,28 @@ const SideItem = ({ item }) => {
         } ${styles.sidebarItem} ${open ? styles.open : ""}`}
       >
         <div className={styles.sidebarTitleContainer}>
-          <Link
-            to={route}
-            className={`nav-link`}
-            aria-current="page"
-            onClick={() => handleSidebarTabChange(item)}
-          >
+          {route ? (
+            <Link
+              to={route}
+              className={`nav-link`}
+              aria-current="page"
+              onClick={() => handleSidebarTabChange(item)}
+            >
+              <div className={styles.sidebarTitle}>
+                <span>
+                  <i className={icon}></i>
+                  {label}
+                </span>
+              </div>
+            </Link>
+          ) : (
             <div className={styles.sidebarTitle}>
               <span>
                 <i className={icon}></i>
                 {label}
               </span>
             </div>
-          </Link>
+          )}
           <i
             className={`bi bi-chevron-down ${styles.sidebarSubItemToggle}`}
             onClick={() => handleSubTabOpen()}

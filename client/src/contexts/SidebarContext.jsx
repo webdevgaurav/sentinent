@@ -18,7 +18,6 @@ export const SidebarProvider = ({ children }) => {
     },
     {
       label: "Coaching",
-      route: "coaching",
       icon: "bi bi-people",
       childrens: [
         {

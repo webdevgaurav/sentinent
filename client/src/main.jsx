@@ -13,7 +13,6 @@ import Profile from "./pages/Profile/Profile.jsx";
 import Setting from "./pages/Setting/Setting.jsx";
 import Dashboard from "./pages/Dashboard/Dashboard.jsx";
 import Training from "./pages/Training/Training.jsx";
-import Coaching from "./pages/Coaching/Coaching.jsx";
 import Tasks from "./pages/Tasks/Tasks.jsx";
 import Notes from "./pages/Notes/Notes.jsx";
 import Product from "./pages/Training/Product/Product.jsx";
@@ -59,10 +58,6 @@ const router = createBrowserRouter([
             element: <Module />,
           },
         ],
-      },
-      {
-        path: "coaching",
-        element: <Coaching />,
       },
       {
         path: "client",
