@@ -1,23 +1,41 @@
 const User = require("../../models/userModel");
-const jwt = require('jsonwebtoken');
+const jwt = require("jsonwebtoken");
 const { hashPassword } = require("../../services/Common");
 
 exports.createUser = async (req, res) => {
   try {
-    const { username, email, password, details } = req.body;
+    const {
+      firstname,
+      lastname,
+      username,
+      email,
+      password,
+      details,
+      userType,
+      status,
+      profile
+    } = req.body;
     const hashedPassword = await hashPassword(password);
     const newUser = new User({
+      firstname,
+      lastname,
       username,
       email,
       password: hashedPassword,
       details,
+      userType,
+      status,
+      profile
     });
     const user = await newUser.save();
     const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
       expiresIn: "1h",
     });
-    return res.status(201).json({ message: "User created successfully", token });
+    return res
+      .status(201)
+      .json({ message: "User created successfully", user, token });
   } catch (error) {
+    console.log(error.message)
     return res.status(500).json({ error: error.message });
   }
 };

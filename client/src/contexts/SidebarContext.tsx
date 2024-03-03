@@ -12,7 +12,7 @@ export const SidebarProvider = ({ children }) => {
     },
     {
       label: "Training",
-      route: "training",
+      route: "training/product",
       icon: "bi bi-basket",
       childrens: [],
     },

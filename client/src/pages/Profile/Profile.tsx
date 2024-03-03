@@ -51,8 +51,8 @@ const Profile = () => {
               className="form-control"
               id="validationServer01"
               required
-              value={formData.firstName}
-              name="firstName"
+              value={formData.firstname}
+              name="firstname"
               onChange={handleChange}
             />
           </div>
@@ -65,8 +65,8 @@ const Profile = () => {
               className="form-control"
               id="validationServer02"
               required
-              value={formData.lastName}
-              name="lastName"
+              value={formData.lastname}
+              name="lastname"
               onChange={handleChange}
             />
           </div>

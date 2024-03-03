@@ -12,9 +12,10 @@ exports.getUser = async (req, res) => {
 exports.getUsers = async (req, res) => {
   try {
     const page = req.query.page || 1;
-    const limit = req.query.limit || 1
+    const limit = req.query.limit || 30;
     const skip = limit * (page - 1);
     const user = await User.find({})
+      .select("-password")
       .sort({ createdAt: -1 })
       .skip(skip)
       .limit(limit);

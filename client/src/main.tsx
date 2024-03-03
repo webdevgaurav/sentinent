@@ -1,24 +1,23 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import App from "./pages/App.jsx";
+import App from "./pages/App.tsx";
 import "./index.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import 'bootstrap-icons/font/bootstrap-icons.css';
+import "bootstrap-icons/font/bootstrap-icons.css";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import myntraStore from "./store/index.js";
-import SignUp from "./pages/SignUp/SignUp.jsx";
-import Login from "./pages/Login/Login.jsx";
-import Profile from "./pages/Profile/Profile.jsx";
-import Setting from "./pages/Setting/Setting.jsx";
-import Dashboard from "./pages/Dashboard/Dashboard.jsx";
-import Training from "./pages/Training/Training.jsx";
-import Tasks from "./pages/Tasks/Tasks.jsx";
-import Notes from "./pages/Notes/Notes.jsx";
-import Product from "./pages/Training/Product/Product.jsx";
-import Phases from "./pages/Training/Phases/Phases.jsx";
-import Module from "./pages/Training/Module/Module.jsx";
-import Client from "./pages/Coaching/Client/Client.jsx";
+import SignUp from "./pages/SignUp/SignUp.tsx";
+import Login from "./pages/Login/Login.tsx";
+import Profile from "./pages/Profile/Profile.tsx";
+import Setting from "./pages/Setting/Setting.tsx";
+import Dashboard from "./pages/Dashboard/Dashboard.tsx";
+import Tasks from "./pages/Tasks/Tasks.tsx";
+import Notes from "./pages/Notes/Notes.tsx";
+import Product from "./pages/Training/Product/Product.tsx";
+import Phases from "./pages/Training/Phases/Phases.tsx";
+import Module from "./pages/Training/Module/Module.tsx";
+import Client from "./pages/Coaching/Client/Client.tsx";
 
 const router = createBrowserRouter([
   {
@@ -43,7 +42,6 @@ const router = createBrowserRouter([
       },
       {
         path: "training",
-        element: <Training />,
         children: [
           {
             path: "product",
@@ -83,7 +81,7 @@ const router = createBrowserRouter([
   },
 ]);
 
-ReactDOM.createRoot(document.getElementById("root")).render(
+ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <Provider store={myntraStore}>
       <RouterProvider router={router} />
