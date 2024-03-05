@@ -6,7 +6,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
-import myntraStore from "./store/index.js";
+import myntraStore from "./store/index.ts";
 import SignUp from "./pages/SignUp/SignUp.tsx";
 import Login from "./pages/Login/Login.tsx";
 import Profile from "./pages/Profile/Profile.tsx";
@@ -26,11 +26,11 @@ const router = createBrowserRouter([
   },
   {
     path: "/login",
-    element: <Login type={"login"} />,
+    element: <Login type="login" />,
   },
   {
     path: "/logout",
-    element: <Login type={"logout"} />,
+    element: <Login type="logout" />,
   },
   {
     path: "/",

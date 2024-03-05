@@ -4,7 +4,7 @@ import Sidebar from "../components/Layout/Sidebar/Sidebar";
 import { UserProvider } from "../contexts/UserContext";
 import { SidebarProvider } from "../contexts/SidebarContext";
 
-const App = () => {
+const App: React.FC = () => {
   return (
     <UserProvider>
       <div className="d-flex h-100">

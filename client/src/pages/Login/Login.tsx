@@ -1,16 +1,20 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import styles from "./Login.module.css";
 import { BASE_URL } from "../../../config";
 import { Link, Navigate } from "react-router-dom";
 
-const Login = ({ type }) => {
+type LoginProps = {
+  type: string;
+};
+
+const Login: React.FC<LoginProps> = (props: LoginProps) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userDetails, setUserDetails] = useState({
     email: "",
     password: "",
   });
 
-  if (type === "logout") {
+  if (props.type === "logout") {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
     return <Navigate to="/login" />;
