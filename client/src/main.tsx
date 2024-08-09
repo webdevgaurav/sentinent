@@ -1,14 +1,25 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./pages/App.tsx";
+
+// Styles
 import "./index.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
+
+// Routes
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
+
+// Stores
 import { Provider } from "react-redux";
 import myntraStore from "./store/index.ts";
+import { ProtectedRoute } from "./utils/ProtectedRoute.tsx";
+import { AuthProvider } from "./contexts/AuthContext.tsx";
+
+// Pages
 import SignUp from "./pages/SignUp/SignUp.tsx";
 import Login from "./pages/Login/Login.tsx";
+import Logout from "./pages/Logout/Logout.tsx";
 import Profile from "./pages/Profile/Profile.tsx";
 import Setting from "./pages/Setting/Setting.tsx";
 import Dashboard from "./pages/Dashboard/Dashboard.tsx";
@@ -26,11 +37,11 @@ const router = createBrowserRouter([
   },
   {
     path: "/login",
-    element: <Login type="login" />,
+    element: <Login />,
   },
   {
     path: "/logout",
-    element: <Login type="logout" />,
+    element: <Logout />,
   },
   {
     path: "/",
@@ -38,44 +49,44 @@ const router = createBrowserRouter([
     children: [
       {
         path: "dashboard",
-        element: <Dashboard />,
+        element: <ProtectedRoute element={<Dashboard />} />,
       },
       {
         path: "training",
         children: [
           {
             path: "product",
-            element: <Product />,
+            element: <ProtectedRoute element={<Product />} />,
           },
           {
             path: "phases/:productId",
-            element: <Phases />,
+            element: <ProtectedRoute element={<Phases />} />,
           },
           {
             path: "module/:productId/:phasesId",
-            element: <Module />,
+            element: <ProtectedRoute element={<Module />} />,
           },
         ],
       },
       {
         path: "client",
-        element: <Client />,
+        element: <ProtectedRoute element={<Client />} />,
       },
       {
         path: "tasks",
-        element: <Tasks />,
+        element: <ProtectedRoute element={<Tasks />} />,
       },
       {
         path: "notes",
-        element: <Notes />,
+        element: <ProtectedRoute element={<Notes />} />,
       },
       {
         path: "profile",
-        element: <Profile />,
+        element: <ProtectedRoute element={<Profile />} />,
       },
       {
         path: "setting",
-        element: <Setting />,
+        element: <ProtectedRoute element={<Setting />} />,
       },
     ],
   },
@@ -84,7 +95,9 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <Provider store={myntraStore}>
-      <RouterProvider router={router} />
+      <AuthProvider>
+        <RouterProvider router={router} />
+      </AuthProvider>
     </Provider>
   </React.StrictMode>
 );

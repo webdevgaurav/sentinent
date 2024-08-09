@@ -7,10 +7,10 @@ const FileUpload = ({ folder, fileType, onClick }) => {
     fileUpload(file);
   };
 
-  const fileUpload = async (selectedFile) => {
+  const fileUpload = (selectedFile) => {
     const formData = new FormData();
     formData.append("file", selectedFile);
-    await axios
+    axios
       .post(`${BASE_URL}/service/file/upload?folder=${folder}`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",

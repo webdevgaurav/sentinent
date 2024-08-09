@@ -1,17 +1,21 @@
-import { createContext, useEffect, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
 import { BASE_URL } from "../../config";
 
-const UserContext = createContext();
+type UserProviderProps = {
+  children: React.ReactNode;
+};
 
-export const UserProvider = ({ children }) => {
+const UserContext = createContext({});
+
+export const UserProvider = ({ children }: UserProviderProps) => {
   const [userInfo, setUserInfo] = useState({});
-  const [isUserLoggedIn, setIsUserLoggedIn] = useState(
+  const [isUserLoggedIn, setIsUserLoggedIn] = useState<boolean>(
     !!localStorage.getItem("token")
   );
-  const [isUserUpdated, setIsUserUpdated] = useState(false);
+  const [isUserUpdated, setIsUserUpdated] = useState<boolean>(false);
 
   useEffect(() => {
-    let user = localStorage.getItem("user");
+    let user: any = localStorage.getItem("user");
     if (user) {
       user = JSON.parse(user);
       fetch(`${BASE_URL}/users/get/${user.email}`)
@@ -33,7 +37,7 @@ export const UserProvider = ({ children }) => {
     }
   }, []);
 
-  const updateUserInfo = (user) => {
+  const updateUserInfo = (user: any) => {
     fetch(`${BASE_URL}/users/create/${user._id}`, {
       method: "PUT",
       headers: {
@@ -61,7 +65,9 @@ export const UserProvider = ({ children }) => {
   };
 
   return (
-    <UserContext.Provider value={{ userInfo, updateUserInfo, isUserLoggedIn, isUserUpdated }}>
+    <UserContext.Provider
+      value={{ userInfo, updateUserInfo, isUserLoggedIn, isUserUpdated }}
+    >
       {children}
     </UserContext.Provider>
   );

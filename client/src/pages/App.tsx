@@ -1,8 +1,8 @@
 import { Outlet } from "react-router-dom";
-import Header from "../components/Layout/Header/Header";
-import Sidebar from "../components/Layout/Sidebar/Sidebar";
 import { UserProvider } from "../contexts/UserContext";
 import { SidebarProvider } from "../contexts/SidebarContext";
+import Header from "../components/Layout/Header/Header";
+import Sidebar from "../components/Layout/Sidebar/Sidebar";
 
 const App: React.FC = () => {
   return (

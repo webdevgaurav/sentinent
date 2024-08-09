@@ -1,8 +1,16 @@
+const { default: mongoose } = require("mongoose");
 const User = require("../../models/userModel");
 
 exports.getUser = async (req, res) => {
   try {
-    const user = await User.findOne({ email: req.params.email });
+    const { identifier } = req.params;
+    let query = {};
+    if (mongoose.Types.ObjectId.isValid(identifier)) {
+      query = { _id: identifier };
+    } else {
+      query = { email: identifier };
+    }
+    const user = await User.findOne(query).select("-password");
     return res.status(201).json(user);
   } catch (error) {
     throw error.message;

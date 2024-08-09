@@ -6,6 +6,7 @@ const express = require("express");
 const cors = require("cors");
 const path = require("path");
 const bodyParser = require("body-parser");
+const cookieParser = require("cookie-parser");
 const errorHandler = require("./utils/errorHandler");
 const session = require("express-session");
 const MongoDBStore = require("connect-mongodb-session")(session);
@@ -21,10 +22,15 @@ const app = express();
 
 // Middleware
 app.use(express.json());
-app.use(bodyParser.json()); // Parse JSON bodies
-app.use(bodyParser.urlencoded({ extended: true })); // Parse URL-encoded bodies
-app.use(cors()); // Enable Cross-Origin Resource Sharing (CORS)
-
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    credentials: true,
+  })
+);
+app.use(cookieParser());
 app.set("trust proxy", 1);
 
 const store = new MongoDBStore({

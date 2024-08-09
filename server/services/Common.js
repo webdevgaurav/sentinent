@@ -20,6 +20,7 @@ exports.compareHashedPassword = (password, hashedPasswordFromDatabase) => {
     try {
       bcrypt.compare(password, hashedPasswordFromDatabase, (err, result) => {
         if (err) {
+          console.log(err)
           reject(false);
         }
         resolve(result);

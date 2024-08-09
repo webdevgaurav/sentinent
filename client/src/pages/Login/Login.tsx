@@ -1,28 +1,22 @@
-import React, { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "./Login.module.css";
 import { BASE_URL } from "../../../config";
-import { Link, Navigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { useAuth } from "../../utils/useAuth";
 
-type LoginProps = {
-  type: string;
-};
-
-const Login: React.FC<LoginProps> = (props: LoginProps) => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+const Login = () => {
   const [userDetails, setUserDetails] = useState({
     email: "",
     password: "",
   });
+  const navigate = useNavigate();
+  const { auth, setAuth } = useAuth();
 
-  if (props.type === "logout") {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
-    return <Navigate to="/login" />;
-  }
-
-  if (localStorage.getItem("token")) {
-    return <Navigate to="/dashboard" />;
-  }
+  useEffect(() => {
+    if (auth.isAuthenticated) navigate("/dashboard");
+  }, [auth.isAuthenticated]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -32,37 +26,27 @@ const Login: React.FC<LoginProps> = (props: LoginProps) => {
     }));
   };
 
-  const onClickHandleLogin = (e) => {
+  const onClickHandleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    fetch(
-      `${BASE_URL}/login?email=${userDetails.email}&password=${userDetails.password}`,
-      {
-        method: "POST",
-      }
-    )
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        localStorage.setItem("token", data.token);
-        localStorage.setItem("user", JSON.stringify(data.user));
-        setUserDetails({
-          email: "",
-          password: "",
-        });
-        setIsLoggedIn(true);
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
+    try {
+      await axios.post(
+        `${BASE_URL}/login`,
+        {
+          email: userDetails.email,
+          password: userDetails.password,
+        },
+        { withCredentials: true }
+      );
+      setUserDetails({ email: "", password: "" });
+      setAuth({ isAuthenticated: true });
+      navigate("/dashboard");
+    } catch (error) {
+      console.error("Login failed:", error.response?.data || error.message);
+    }
   };
 
   return (
     <div className={styles.container}>
-      {isLoggedIn && <Navigate to="/profile" replace={true} />}
       <div className={styles.loginLeft}>
         <div className="d-flex align-items-center justify-content-between">
           <Link to={"/signup"} className="btn btn-primary">

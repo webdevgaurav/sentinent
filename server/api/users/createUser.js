@@ -1,5 +1,4 @@
 const User = require("../../models/userModel");
-const jwt = require("jsonwebtoken");
 const { hashPassword } = require("../../services/Common");
 
 exports.createUser = async (req, res) => {
@@ -28,12 +27,9 @@ exports.createUser = async (req, res) => {
       profile
     });
     const user = await newUser.save();
-    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
-      expiresIn: "1h",
-    });
     return res
       .status(201)
-      .json({ message: "User created successfully", user, token });
+      .json({ message: "User created successfully", user });
   } catch (error) {
     console.log(error.message)
     return res.status(500).json({ error: error.message });
@@ -44,6 +40,9 @@ exports.updateUser = async (req, res) => {
   try {
     const userId = req.params.userId;
     const updateData = req.body;
+    if(updateData.password){
+      updateData.password = await hashPassword(updateData.password);
+    }
     const updatedUser = await User.findByIdAndUpdate(userId, updateData, {
       new: true,
     });
